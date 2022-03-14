@@ -21,15 +21,26 @@ android {
         }
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Dependencies.Compose.version
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
 dependencies {
+    Dependencies.AndroidxCore.applyDependencies(this)
+    Dependencies.Compose.applyDependencies(this)
+    Dependencies.Koin.applyDependencies(this)
 }
