@@ -2,6 +2,24 @@ import org.gradle.kotlin.dsl.DependencyHandlerScope
 
 sealed class Dependencies {
 
+    object Ktor : Dependencies() {
+        private const val version = "2.0.0-beta-1"
+
+        private const val ktorCore = "io.ktor:ktor-client-core:$version"
+        private const val ktorAndroid = "io.ktor:ktor-client-android:$version"
+        private const val ktorContentNegotiation = "io.ktor:ktor-client-content-negotiation:$version"
+        private const val ktorSerializationJson = "io.ktor:ktor-serialization-kotlinx-json:$version"
+
+        override fun applyDependencies(scope: DependencyHandlerScope) {
+            scope {
+                implementation(ktorCore)
+                implementation(ktorAndroid)
+                implementation(ktorContentNegotiation)
+                implementation(ktorSerializationJson)
+            }
+        }
+    }
+
     object AndroidxCore : Dependencies() {
         private const val version = "1.7.0"
 
@@ -19,11 +37,12 @@ sealed class Dependencies {
     }
 
     object Compose : Dependencies() {
-        const val version = "1.1.1"
+        const val version = "1.2.0-alpha05"
 
         private const val activity = "androidx.activity:activity-compose:1.4.0"
         private const val animations = "androidx.compose.animation:animation:$version"
         private const val foundation = "androidx.compose.foundation:foundation:$version"
+        private const val runtime = "androidx.compose.runtime:runtime:$version"
         private const val material = "androidx.compose.material:material:$version"
         private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha07"
 
@@ -32,8 +51,27 @@ sealed class Dependencies {
                 implementation(activity)
                 implementation(animations)
                 implementation(foundation)
+                implementation(runtime)
                 implementation(material)
                 implementation(material3)
+            }
+        }
+    }
+
+    object Accompanist : Dependencies() {
+        private const val version = "0.24.4-alpha"
+
+        private const val swiperefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
+        private const val placeholderMaterial = "com.google.accompanist:accompanist-placeholder-material:$version"
+        private const val flowlayout = "com.google.accompanist:accompanist-flowlayout:$version"
+        private const val systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:$version"
+
+        override fun applyDependencies(scope: DependencyHandlerScope) {
+            scope {
+                implementation(swiperefresh)
+                implementation(placeholderMaterial)
+                implementation(flowlayout)
+                implementation(systemuicontroller)
             }
         }
     }
@@ -42,7 +80,7 @@ sealed class Dependencies {
         private const val version = "3.1.5"
 
         private const val koin = "io.insert-koin:koin-android:$version"
-        private const val koinCompose = "io.insert-koin:koin-android-compose:$version"
+        private const val koinCompose = "io.insert-koin:koin-androidx-compose:$version"
 
         override fun applyDependencies(scope: DependencyHandlerScope) {
             scope {

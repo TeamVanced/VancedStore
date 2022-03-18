@@ -1,0 +1,63 @@
+package com.vanced.store.ui.theme.accents
+
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import com.vanced.store.ui.theme.accents.*
+
+val OrangeLightThemeColors = lightColorScheme(
+    primary = orange_md_theme_light_primary,
+    onPrimary = orange_md_theme_light_onPrimary,
+    primaryContainer = orange_md_theme_light_primaryContainer,
+    onPrimaryContainer = orange_md_theme_light_onPrimaryContainer,
+    secondary = orange_md_theme_light_secondary,
+    onSecondary = orange_md_theme_light_onSecondary,
+    secondaryContainer = orange_md_theme_light_secondaryContainer,
+    onSecondaryContainer = orange_md_theme_light_onSecondaryContainer,
+    tertiary = orange_md_theme_light_tertiary,
+    onTertiary = orange_md_theme_light_onTertiary,
+    tertiaryContainer = orange_md_theme_light_tertiaryContainer,
+    onTertiaryContainer = orange_md_theme_light_onTertiaryContainer,
+    error = orange_md_theme_light_error,
+    errorContainer = orange_md_theme_light_errorContainer,
+    onError = orange_md_theme_light_onError,
+    onErrorContainer = orange_md_theme_light_onErrorContainer,
+    background = orange_md_theme_light_background,
+    onBackground = orange_md_theme_light_onBackground,
+    surface = orange_md_theme_light_surface,
+    onSurface = orange_md_theme_light_onSurface,
+    surfaceVariant = orange_md_theme_light_surfaceVariant,
+    onSurfaceVariant = orange_md_theme_light_onSurfaceVariant,
+    outline = orange_md_theme_light_outline,
+    inverseOnSurface = orange_md_theme_light_inverseOnSurface,
+    inverseSurface = orange_md_theme_light_inverseSurface,
+    inversePrimary = orange_md_theme_light_inversePrimary,
+)
+
+val OrangeDarkThemeColors = darkColorScheme(
+    primary = orange_md_theme_dark_primary,
+    onPrimary = orange_md_theme_dark_onPrimary,
+    primaryContainer = orange_md_theme_dark_primaryContainer,
+    onPrimaryContainer = orange_md_theme_dark_onPrimaryContainer,
+    secondary = orange_md_theme_dark_secondary,
+    onSecondary = orange_md_theme_dark_onSecondary,
+    secondaryContainer = orange_md_theme_dark_secondaryContainer,
+    onSecondaryContainer = orange_md_theme_dark_onSecondaryContainer,
+    tertiary = orange_md_theme_dark_tertiary,
+    onTertiary = orange_md_theme_dark_onTertiary,
+    tertiaryContainer = orange_md_theme_dark_tertiaryContainer,
+    onTertiaryContainer = orange_md_theme_dark_onTertiaryContainer,
+    error = orange_md_theme_dark_error,
+    errorContainer = orange_md_theme_dark_errorContainer,
+    onError = orange_md_theme_dark_onError,
+    onErrorContainer = orange_md_theme_dark_onErrorContainer,
+    background = orange_md_theme_dark_background,
+    onBackground = orange_md_theme_dark_onBackground,
+    surface = orange_md_theme_dark_surface,
+    onSurface = orange_md_theme_dark_onSurface,
+    surfaceVariant = orange_md_theme_dark_surfaceVariant,
+    onSurfaceVariant = orange_md_theme_dark_onSurfaceVariant,
+    outline = orange_md_theme_dark_outline,
+    inverseOnSurface = orange_md_theme_dark_inverseOnSurface,
+    inverseSurface = orange_md_theme_dark_inverseSurface,
+    inversePrimary = orange_md_theme_dark_inversePrimary,
+)

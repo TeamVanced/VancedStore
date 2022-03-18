@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -36,11 +39,21 @@ android {
 
     kotlinOptions {
         jvmTarget = "11"
+        optIn("androidx.compose.material3.ExperimentalMaterial3Api")
+        optIn("androidx.compose.animation.ExperimentalAnimationApi")
+        optIn("androidx.compose.foundation.ExperimentalFoundationApi")
     }
 }
 
+fun KotlinJvmOptions.optIn(library: String) {
+    freeCompilerArgs = freeCompilerArgs +
+            "-opt-in=$library"
+}
+
 dependencies {
+    Dependencies.Ktor.applyDependencies(this)
     Dependencies.AndroidxCore.applyDependencies(this)
     Dependencies.Compose.applyDependencies(this)
+    Dependencies.Accompanist.applyDependencies(this)
     Dependencies.Koin.applyDependencies(this)
 }
