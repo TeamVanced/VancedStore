@@ -1,5 +1,6 @@
 package com.vanced.store.ui.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.rememberSplineBasedDecay
@@ -258,6 +259,7 @@ private fun SearchBar(
     onValueChange: (String) -> Unit,
     onBackClick: () -> Unit,
 ) {
+    BackHandler(onBack = onBackClick)
     BasicTextField(
         modifier = modifier,
         value = value,
