@@ -14,34 +14,25 @@ class BrowseViewModel(
     private val browseRepository: BrowseRepository
 ) : ViewModel() {
 
-    sealed class Screen {
-        object Loading : Screen()
-        object Browse : Screen()
-        object Search : Screen()
+    sealed class State {
+        object Loading : State()
+        object Browse : State()
 
         val isLoading get() = this is Loading
         val isBrowse get() = this is Browse
-        val isSearch get() = this is Search
     }
 
     enum class LayoutMode {
         LIST, GRID
     }
 
-    private var apps = listOf<BrowseAppModel>()
-
-    var screen by mutableStateOf<Screen>(Screen.Loading)
+    var state by mutableStateOf<State>(State.Loading)
         private set
 
     var layoutMode by mutableStateOf(LayoutMode.LIST)
         private set
 
-    var searchText by mutableStateOf("")
-        private set
-
-    val searchApps = mutableStateListOf<BrowseAppModel>()
-
-    val browseApps = mutableStateListOf<BrowseAppModel>()
+    val apps = mutableStateListOf<BrowseAppModel>()
 
     fun loadApps() {
         viewModelScope.launch {
@@ -51,25 +42,5 @@ class BrowseViewModel(
 
     fun switchLayoutMode(newMode: LayoutMode) {
         layoutMode = newMode
-    }
-
-    fun search(query: String) {
-        searchText = query
-        val filteredApps = apps.filter {
-            it.appName.contains(query) || it.appDescription.contains(query)
-        }
-        searchApps.clear()
-        searchApps.addAll(filteredApps)
-    }
-
-    fun enterSearchScreen() {
-        searchApps.addAll(apps)
-        screen = Screen.Search
-    }
-
-    fun exitSearchScreen() {
-        screen = Screen.Browse
-        searchApps.clear()
-        searchText = ""
     }
 }

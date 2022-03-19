@@ -33,4 +33,10 @@ sealed class VSNavigationScreen(
         labelRes = R.string.navigation_library
     )
 
+    object Search : VSNavigationScreen(
+        route = "search",
+        iconRes = 0,
+        labelRes = 0
+    )
+
 }
