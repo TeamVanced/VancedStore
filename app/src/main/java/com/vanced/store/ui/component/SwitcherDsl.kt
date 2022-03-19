@@ -86,11 +86,11 @@ fun SwitcherRow(
     content: SwitcherListScope.() -> Unit
 ) {
     val itemScope = remember { SwitcherItemScopeImpl() }
-    val latestContent = rememberUpdatedState(content)
+    val latestContent by rememberUpdatedState(content)
     val items by remember {
         derivedStateOf {
             val listScope = SwitcherListScopeImpl()
-            listScope.apply(latestContent.value)
+            listScope.apply(latestContent)
             listScope.intervals
         }
     }
