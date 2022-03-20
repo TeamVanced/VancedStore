@@ -65,8 +65,8 @@ fun LoadedGridBrowseAppCard(
             GridDetailsLayout(
                 icon = {
                     VSCard(
-                        modifier = Modifier.size(48.dp),
-                        shape = RoundedCornerShape(16.dp)
+                        modifier = Modifier.size(36.dp),
+                        shape = CircleShape
                     ) {}
                 },
                 title = { Text(appName) },
@@ -75,37 +75,6 @@ fun LoadedGridBrowseAppCard(
         },
         supportsNonroot = supportsNonroot,
         supportsRoot = supportsRoot
-    )
-}
-
-@Composable
-fun LoadingGridBrowseAppCard(
-    modifier: Modifier = Modifier
-) {
-    BaseLoadingBrowseAppCard(
-        modifier = modifier,
-        details = {
-            GridDetailsLayout(
-                icon = {
-                    PlaceholderBox(
-                        modifier = Modifier.size(36.dp)
-                    )
-                },
-                title = {
-                    PlaceholderBox(
-                        modifier = Modifier
-                            .fillMaxWidth(0.6f)
-                            .height(24.dp))
-                },
-                description = {
-                    PlaceholderBox(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        shape = VSTheme.shapes.large)
-                }
-            )
-        },
     )
 }
 
@@ -119,7 +88,8 @@ fun LoadingListBrowseAppCard(
             ListDetailsLayout(
                 icon = {
                     PlaceholderBox(
-                        modifier = Modifier.size(36.dp)
+                        modifier = Modifier.size(48.dp),
+                        shape = RoundedCornerShape(16.dp)
                     )
                 },
                 title = {
@@ -139,6 +109,37 @@ fun LoadingListBrowseAppCard(
                 }
             )
         }
+    )
+}
+
+@Composable
+fun LoadingGridBrowseAppCard(
+    modifier: Modifier = Modifier
+) {
+    BaseLoadingBrowseAppCard(
+        modifier = modifier,
+        details = {
+            GridDetailsLayout(
+                icon = {
+                    PlaceholderBox(
+                        modifier = Modifier.size(36.dp),
+                    )
+                },
+                title = {
+                    PlaceholderBox(
+                        modifier = Modifier
+                            .fillMaxWidth(0.6f)
+                            .height(24.dp))
+                },
+                description = {
+                    PlaceholderBox(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(56.dp),
+                        shape = VSTheme.shapes.large)
+                }
+            )
+        },
     )
 }
 
