@@ -1,6 +1,8 @@
 package com.vanced.store.ui.theme
 
 import android.os.Build
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
+import androidx.compose.foundation.gestures.OverScrollConfiguration
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -13,9 +15,10 @@ import com.vanced.store.ui.theme.accents.BlueLightThemeColors
 
 private inline fun provideColorScheme(
     dynamic: () -> ColorScheme,
-    static: () -> ColorScheme
+    static: () -> ColorScheme,
+    canUseDynamic: Boolean,
 ): ColorScheme {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    return if (canUseDynamic) {
         dynamic()
     } else {
         static()
@@ -28,8 +31,10 @@ fun VSTheme(
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
+    val isAndroid12OrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     MaterialTheme(
         colorScheme = provideColorScheme(
+            canUseDynamic = isAndroid12OrHigher,
             dynamic = {
                 if (darkMode) {
                     dynamicDarkColorScheme(context)
@@ -49,7 +54,10 @@ fun VSTheme(
     ) {
         CompositionLocalProvider(
             LocalShapes provides VSShapes,
-            LocalSpacing provides VSSpacing
+            LocalSpacing provides VSSpacing,
+            LocalOverScrollConfiguration provides OverScrollConfiguration(
+                forceShowAlways = isAndroid12OrHigher
+            )
         ) {
             content()
         }
