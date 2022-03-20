@@ -25,7 +25,14 @@ class BrowseViewModel(
     }
 
     enum class LayoutMode {
-        LIST, GRID
+        LIST, GRID;
+
+        fun opposite(): LayoutMode {
+            return when (this) {
+                LIST -> GRID
+                GRID -> LIST
+            }
+        }
     }
 
     var state by mutableStateOf<State>(State.Loading)
