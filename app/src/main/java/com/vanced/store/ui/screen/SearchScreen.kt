@@ -1,6 +1,5 @@
 package com.vanced.store.ui.screen
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -17,18 +16,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import com.vanced.store.ui.theme.VSTheme
+import com.vanced.store.ui.viewmodel.SearchViewModel
 
 @Composable
 fun SearchScreen(
-    modifier: Modifier = Modifier,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: SearchViewModel,
+    modifier: Modifier = Modifier
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
             SearchBar(
-                value = "",
-                onValueChange = {},
+                value = viewModel.searchValue,
+                onValueChange = {
+                    viewModel.search(it)
+                },
                 onBackClick = onBackClick
             )
         }

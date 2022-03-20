@@ -32,10 +32,10 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun BrowseScreen(
-    modifier: Modifier = Modifier,
     onSearchClick: () -> Unit,
+    viewModel: BrowseViewModel,
+    modifier: Modifier = Modifier,
 ) {
-    val viewModel: BrowseViewModel = getViewModel()
     val decayAnimationSpec = rememberSplineBasedDecay<Float>()
     val scrollBehavior = remember(decayAnimationSpec) {
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec)
@@ -165,7 +165,7 @@ fun BrowseScreenLoading(
 private fun AppBar(
     modifier: Modifier = Modifier,
     searchButtonEnabled: Boolean = true,
-    scrollBehavior: TopAppBarScrollBehavior? = null,
+    scrollBehavior: TopAppBarScrollBehavior,
     onSearchClick: () -> Unit
 ) {
     LargeTopAppBar(
@@ -224,7 +224,7 @@ private fun BrowseAppLazyColumn(
 ) {
     LazyColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerMedium),
+        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerLarge),
         contentPadding = PaddingValues(horizontal = VSTheme.spacing.outerEdge),
         userScrollEnabled = scrollEnabled,
         content = content

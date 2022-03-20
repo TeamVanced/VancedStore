@@ -3,4 +3,5 @@
 
     <string name="navigation_browse">Browse</string>
     <string name="navigation_library">Library</string>
+    <string name="navigation_more">More</string>
 </resources>

@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.vanced.store.R
 
 @Composable
-fun LibraryScreen(
+fun MoreScreen(
     modifier: Modifier = Modifier
 ) {
     val decayAnimationSpec = rememberSplineBasedDecay<Float>()
@@ -37,7 +37,7 @@ private fun AppBar(
         modifier = modifier,
         scrollBehavior = scrollBehavior,
         title = {
-            Text(text = stringResource(R.string.navigation_library))
+            Text(text = stringResource(R.string.navigation_more))
         }
     )
 }

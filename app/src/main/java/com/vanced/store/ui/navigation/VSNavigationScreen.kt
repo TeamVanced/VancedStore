@@ -15,10 +15,13 @@ sealed class VSNavigationScreen(
 ) {
 
     companion object {
-        val bottomBarItems get() = arrayOf(
-            Browse,
-            Library
-        )
+        val bottomBarItems by lazy {
+            arrayOf(
+                Browse,
+                Library,
+                More
+            )
+        }
     }
 
     object Browse : VSNavigationScreen(
@@ -33,10 +36,30 @@ sealed class VSNavigationScreen(
         labelRes = R.string.navigation_library
     )
 
+    object More : VSNavigationScreen(
+        route = "more",
+        iconRes = R.drawable.ic_more,
+        labelRes = R.string.navigation_more
+    )
+
     object Search : VSNavigationScreen(
         route = "search",
         iconRes = 0,
         labelRes = 0
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is VSNavigationScreen)
+            return false
+
+        return this.route == other.route
+    }
+
+    override fun hashCode(): Int {
+        var result = route.hashCode()
+        result = 31 * result + iconRes
+        result = 31 * result + labelRes
+        return result
+    }
 
 }

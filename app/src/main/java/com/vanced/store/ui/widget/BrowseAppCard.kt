@@ -2,18 +2,19 @@ package com.vanced.store.ui.widget
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
+import com.vanced.store.ui.component.VSElevatedCard
 import com.vanced.store.ui.theme.VSTheme
 
 @Composable
@@ -23,47 +24,34 @@ fun LoadingBrowseAppCard(
     BaseBrowseAppCard(
         modifier = modifier,
         icon = {
-            Box(modifier = Modifier
-                .size(36.dp)
-                .clip(CircleShape)
-                .vsPlaceholder())
+            PlaceholderBox(
+                modifier = Modifier
+                    .size(36.dp))
         },
         title = {
-            Box(modifier = Modifier
-                .weight(1f)
-                .height(24.dp)
-                .clip(VSTheme.shapes.medium)
-                .vsPlaceholder())
+            PlaceholderBox(
+                modifier = Modifier
+                    .fillMaxWidth(0.6f)
+                    .height(24.dp))
         },
         description = {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(32.dp)
-                .clip(VSTheme.shapes.medium)
-                .vsPlaceholder())
+            PlaceholderBox(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = VSTheme.shapes.large)
         },
         labels = {
-            Box(modifier = Modifier
-                .width(70.dp)
-                .height(20.dp)
-                .clip(CircleShape)
-                .vsPlaceholder())
-            Box(modifier = Modifier
-                .width(65.dp)
-                .height(20.dp)
-                .clip(CircleShape)
-                .vsPlaceholder())
+            PlaceholderBox(
+                modifier = Modifier
+                    .width(72.dp)
+                    .height(24.dp)
+                    .clip(CircleShape))
+            PlaceholderBox(
+                modifier = Modifier
+                    .width(64.dp)
+                    .height(24.dp))
         }
-    )
-}
-
-private fun Modifier.vsPlaceholder() = composed {
-    placeholder(
-        visible = true,
-        color = VSTheme.colorScheme.onSurface,
-        highlight = PlaceholderHighlight.shimmer(
-            highlightColor = VSTheme.colorScheme.onSurfaceVariant
-        )
     )
 }
 
@@ -76,10 +64,15 @@ private fun BaseBrowseAppCard(
     description: @Composable () -> Unit,
     labels: @Composable () -> Unit,
 ) {
-    val content = @Composable {
+    VSElevatedCard(
+        modifier = modifier,
+        onClick = onClick,
+        elevation = CardDefaults.elevatedCardElevation(
+            defaultElevation = 2.dp
+        )
+    ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(VSTheme.spacing.innerEdge),
             verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge)
         ) {
@@ -100,19 +93,23 @@ private fun BaseBrowseAppCard(
             }
         }
     }
+}
 
-    if (onClick != null) {
-        Card(
-            modifier = modifier,
-            onClick = onClick,
-        ) {
-            content()
-        }
-    } else {
-        Card(
-            modifier = modifier
-        ) {
-            content()
-        }
-    }
+
+@Composable
+private fun PlaceholderBox(
+    modifier: Modifier = Modifier,
+    shape: Shape = CircleShape
+) {
+    Box(
+        modifier = modifier
+            .clip(shape)
+            .placeholder(
+                visible = true,
+                color = VSTheme.colorScheme.onSurfaceVariant,
+                highlight = PlaceholderHighlight.shimmer(
+                    highlightColor = VSTheme.colorScheme.onSurface
+                )
+            )
+    )
 }

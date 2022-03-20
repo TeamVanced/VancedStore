@@ -18,14 +18,19 @@ import com.vanced.store.ui.navigation.VSNavigationScreen
 import com.vanced.store.ui.navigation.rememberVSNavigatorBackstack
 import com.vanced.store.ui.screen.BrowseScreen
 import com.vanced.store.ui.screen.LibraryScreen
+import com.vanced.store.ui.screen.MoreScreen
 import com.vanced.store.ui.screen.SearchScreen
 import com.vanced.store.ui.theme.VSTheme
+import com.vanced.store.ui.viewmodel.BrowseViewModel
 import com.vanced.store.ui.viewmodel.MainViewModel
+import com.vanced.store.ui.viewmodel.SearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
     private val mainViewModel: MainViewModel by viewModel()
+    private val browseViewModel: BrowseViewModel by viewModel()
+    private val searchViewModel: SearchViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -84,11 +89,17 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             onSearchClick = {
                                 navigator.navigate(VSNavigationScreen.Search)
-                            }
+                            },
+                            viewModel = browseViewModel
                         )
                     }
                     is VSNavigationScreen.Library -> {
                         LibraryScreen(
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                    is VSNavigationScreen.More -> {
+                        MoreScreen(
                             modifier = Modifier.fillMaxSize()
                         )
                     }
@@ -97,7 +108,8 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             onBackClick = {
                                 navigator.back()
-                            }
+                            },
+                            viewModel = searchViewModel
                         )
                     }
                 }
