@@ -36,6 +36,8 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
+        browseViewModel.loadApps()
+
         setContent {
             VSTheme(darkMode = true) {
                 val systemUiController = rememberSystemUiController()

@@ -27,8 +27,10 @@ import com.vanced.store.ui.component.SwitcherRow
 import com.vanced.store.ui.component.items
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.BrowseViewModel
-import com.vanced.store.ui.widget.LoadingBrowseAppCard
-import org.koin.androidx.compose.getViewModel
+import com.vanced.store.ui.widget.LoadedGridBrowseAppCard
+import com.vanced.store.ui.widget.LoadedListBrowseAppCard
+import com.vanced.store.ui.widget.LoadingGridBrowseAppCard
+import com.vanced.store.ui.widget.LoadingListBrowseAppCard
 
 @Composable
 fun BrowseScreen(
@@ -50,7 +52,7 @@ fun BrowseScreen(
             )
         }
     ) {
-        when (viewModel.state) {
+        when (val state = viewModel.state) {
             is BrowseViewModel.State.Loading -> {
                 BrowseScreenLoading(
                     modifier = Modifier
@@ -64,7 +66,7 @@ fun BrowseScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(it),
-                    apps = viewModel.apps,
+                    apps = state.apps,
                     layoutMode = viewModel.layoutMode,
                     onChangeLayoutMode = { layoutMode ->
                         viewModel.switchLayoutMode(layoutMode)
@@ -114,14 +116,25 @@ fun BrowseScreenApps(
                 BrowseViewModel.LayoutMode.LIST -> {
                     BrowseAppLazyColumn {
                         items(apps) { app ->
-
+                            LoadedListBrowseAppCard(
+                                modifier = Modifier.fillParentMaxWidth(),
+                                appName = app.appName,
+                                appDescription = app.appDescription,
+                                supportsNonroot = app.supportsNonroot,
+                                supportsRoot = app.supportsRoot
+                            )
                         }
                     }
                 }
                 BrowseViewModel.LayoutMode.GRID -> {
                     BrowseAppLazyVerticalGrid {
                         items(apps) { app ->
-
+                            LoadedGridBrowseAppCard(
+                                appName = app.appName,
+                                appDescription = app.appDescription,
+                                supportsNonroot = app.supportsNonroot,
+                                supportsRoot = app.supportsRoot
+                            )
                         }
                     }
                 }
@@ -142,7 +155,7 @@ fun BrowseScreenLoading(
                 scrollEnabled = false
             ) {
                 items(10) {
-                    LoadingBrowseAppCard(
+                    LoadingListBrowseAppCard(
                         modifier = Modifier.fillParentMaxWidth()
                     )
                 }
@@ -154,7 +167,7 @@ fun BrowseScreenLoading(
                 scrollEnabled = false
             ) {
                 items(10) {
-                    LoadingBrowseAppCard()
+                    LoadingGridBrowseAppCard()
                 }
             }
         }
@@ -225,7 +238,7 @@ private fun BrowseAppLazyColumn(
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerLarge),
-        contentPadding = PaddingValues(horizontal = VSTheme.spacing.outerEdge),
+//        contentPadding = PaddingValues(horizontal = VSTheme.spacing.outerEdge),
         userScrollEnabled = scrollEnabled,
         content = content
     )
@@ -242,7 +255,7 @@ private fun BrowseAppLazyVerticalGrid(
         columns = GridCells.Adaptive(150.dp),
         verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerMedium),
         horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerMedium),
-        contentPadding = PaddingValues(horizontal = VSTheme.spacing.outerEdge),
+//        contentPadding = PaddingValues(horizontal = VSTheme.spacing.outerEdge),
         userScrollEnabled = scrollEnabled,
         content = content
     )

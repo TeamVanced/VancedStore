@@ -5,7 +5,9 @@ import com.vanced.store.network.dto.AppDto
 data class BrowseAppModel(
     val appName: String,
     val appDescription: String,
-    val appIconUrl: String
+    val appIconUrl: String,
+    val supportsNonroot: Boolean,
+    val supportsRoot: Boolean
 ) {
     companion object {
         fun fromDto(appDto: AppDto): BrowseAppModel {
@@ -13,7 +15,9 @@ data class BrowseAppModel(
                 BrowseAppModel(
                     appName = appName,
                     appDescription = appDescription,
-                    appIconUrl = ""
+                    appIconUrl = "",
+                    supportsNonroot = true,
+                    supportsRoot = true
                 )
             }
         }

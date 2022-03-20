@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanced.store.domain.model.BrowseAppModel
 import com.vanced.store.domain.repository.BrowseRepository
+import com.vanced.store.util.repopulate
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class BrowseViewModel(
@@ -16,7 +18,7 @@ class BrowseViewModel(
 
     sealed class State {
         object Loading : State()
-        object Browse : State()
+        data class Browse(val apps: List<BrowseAppModel>) : State()
 
         val isLoading get() = this is Loading
         val isBrowse get() = this is Browse
@@ -32,11 +34,11 @@ class BrowseViewModel(
     var layoutMode by mutableStateOf(LayoutMode.LIST)
         private set
 
-    val apps = mutableStateListOf<BrowseAppModel>()
-
     fun loadApps() {
         viewModelScope.launch {
-
+            state = State.Loading
+            delay(1000L)
+            state = State.Browse(browseRepository.getApps())
         }
     }
 
