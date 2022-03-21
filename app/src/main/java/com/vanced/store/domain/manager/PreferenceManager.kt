@@ -13,7 +13,12 @@ class PreferenceManagerImpl(
 ) : PreferenceManager {
 
     override var browseLayoutMode: BrowseLayoutMode
-        get() = BrowseLayoutMode.fromOrdinal(getInt(BROWSE_LAYOUT_MODE_KEY, BROWSE_LAYOUT_MODE_DEFAULT))
+        get() = BrowseLayoutMode.fromOrdinal(
+            getInt(
+                BROWSE_LAYOUT_MODE_KEY,
+                BROWSE_LAYOUT_MODE_DEFAULT
+            )
+        )
         set(value) {
             putInt(BROWSE_LAYOUT_MODE_KEY, value.ordinal)
         }

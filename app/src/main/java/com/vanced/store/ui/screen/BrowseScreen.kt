@@ -1,7 +1,10 @@
 package com.vanced.store.ui.screen
 
 import androidx.compose.animation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -10,7 +13,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
@@ -50,7 +54,9 @@ fun BrowseScreen(
             )
         }
     ) {
-        val screenModifier = Modifier.fillMaxSize().padding(it)
+        val screenModifier = Modifier
+            .fillMaxSize()
+            .padding(it)
         when (val state = viewModel.state) {
             is BrowseViewModel.State.Loading -> {
                 BrowseScreenLoading(

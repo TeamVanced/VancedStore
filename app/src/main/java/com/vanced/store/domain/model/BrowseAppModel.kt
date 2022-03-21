@@ -11,7 +11,7 @@ data class BrowseAppModel(
 ) {
     companion object {
         fun fromDto(appDto: AppDto): BrowseAppModel {
-            return with (appDto) {
+            return with(appDto) {
                 BrowseAppModel(
                     appName = appName,
                     appDescription = appDescription,

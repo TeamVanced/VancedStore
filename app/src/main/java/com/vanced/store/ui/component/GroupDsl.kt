@@ -14,6 +14,75 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.vanced.store.ui.theme.VSTheme
 
+private val GroupRowContainerHeight = 48.dp
+private val GroupRowItemMinWidth = 56.dp
+
+@Composable
+fun GroupRow(
+    modifier: Modifier = Modifier,
+    content: GroupListScope.() -> Unit
+) {
+    val itemScope = remember { GroupItemScopeImpl() }
+    val latestContent by rememberUpdatedState(content)
+    val items by remember {
+        derivedStateOf {
+            val listScope = GroupListScopeImpl()
+            listScope.apply(latestContent)
+            listScope.intervals
+        }
+    }
+    Surface(
+        modifier = modifier
+            .height(GroupRowContainerHeight)
+            .widthIn(min = GroupRowItemMinWidth)
+            .clip(RoundedCornerShape(12.dp)),
+        tonalElevation = 3.dp
+    ) {
+        Row(
+            modifier = Modifier.width(IntrinsicSize.Max),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            items.forEachIndexed { index, content ->
+                if (index != 0) {
+                    //Divider
+                    Box(
+                        modifier = Modifier
+                            .background(color = VSTheme.colorScheme.surface)
+                            .width(2.dp)
+                            .height(GroupRowContainerHeight)
+                    )
+                }
+                content.content(itemScope)()
+            }
+        }
+    }
+}
+
+@Suppress("unused")
+@Composable
+fun GroupItemScope.ToggleItem(
+    selected: Boolean,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+    icon: @Composable () -> Unit
+) {
+    val color by animateColorAsState(
+        if (selected) VSTheme.colorScheme.secondaryContainer else Color.Transparent
+    )
+    Box(
+        modifier = modifier
+            .widthIn(min = GroupRowItemMinWidth)
+            .height(GroupRowContainerHeight)
+            .background(color)
+            .clickable(onClick = onClick, enabled = enabled)
+            .padding(horizontal = VSTheme.spacing.innerSmall),
+        contentAlignment = Alignment.Center
+    ) {
+        icon()
+    }
+}
+
 interface GroupListScope {
 
     fun item(
@@ -76,72 +145,3 @@ class GroupItemScopeImpl : GroupItemScope
 class DividedItemIntervalContent(
     val content: GroupItemScope.() -> @Composable () -> Unit
 )
-
-private val SwitcherRowHeight = 48.dp
-private val SwitcherItemMinWidth = 56.dp
-
-@Composable
-fun GroupRow(
-    modifier: Modifier = Modifier,
-    content: GroupListScope.() -> Unit
-) {
-    val itemScope = remember { GroupItemScopeImpl() }
-    val latestContent by rememberUpdatedState(content)
-    val items by remember {
-        derivedStateOf {
-            val listScope = GroupListScopeImpl()
-            listScope.apply(latestContent)
-            listScope.intervals
-        }
-    }
-    Surface(
-        modifier = modifier
-            .height(SwitcherRowHeight)
-            .widthIn(min = SwitcherItemMinWidth)
-            .clip(RoundedCornerShape(12.dp)),
-        tonalElevation = 3.dp
-    ) {
-        Row(
-            modifier = Modifier.width(IntrinsicSize.Max),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            items.forEachIndexed { index, content ->
-                if (index != 0) {
-                    //Divider
-                    Box(
-                        modifier = Modifier
-                            .background(color = VSTheme.colorScheme.surface)
-                            .width(2.dp)
-                            .height(SwitcherRowHeight)
-                    )
-                }
-                content.content(itemScope)()
-            }
-        }
-    }
-}
-
-@Suppress("unused")
-@Composable
-fun GroupItemScope.ToggleItem(
-    selected: Boolean,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    onClick: () -> Unit,
-    icon: @Composable () -> Unit
-) {
-    val color by animateColorAsState(
-        if (selected) VSTheme.colorScheme.secondaryContainer else Color.Transparent
-    )
-    Box(
-        modifier = modifier
-            .widthIn(min = SwitcherItemMinWidth)
-            .height(SwitcherRowHeight)
-            .background(color)
-            .clickable(onClick = onClick, enabled = enabled)
-            .padding(horizontal = VSTheme.spacing.innerSmall),
-        contentAlignment = Alignment.Center
-    ) {
-        icon()
-    }
-}

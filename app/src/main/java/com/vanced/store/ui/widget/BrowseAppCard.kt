@@ -129,14 +129,16 @@ fun LoadingGridBrowseAppCard(
                     PlaceholderBox(
                         modifier = Modifier
                             .fillMaxWidth(0.6f)
-                            .height(24.dp))
+                            .height(24.dp)
+                    )
                 },
                 description = {
                     PlaceholderBox(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        shape = VSTheme.shapes.large)
+                        shape = VSTheme.shapes.large
+                    )
                 }
             )
         },
@@ -183,11 +185,13 @@ private fun BaseLoadingBrowseAppCard(
                 modifier = Modifier
                     .width(72.dp)
                     .height(24.dp)
-                    .clip(CircleShape))
+                    .clip(CircleShape)
+            )
             PlaceholderBox(
                 modifier = Modifier
                     .width(64.dp)
-                    .height(24.dp))
+                    .height(24.dp)
+            )
         },
         onClick = null
     )

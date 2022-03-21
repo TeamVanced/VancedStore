@@ -1,11 +1,5 @@
 package com.vanced.store.domain.repository
 
-interface LibraryRepository {
+interface LibraryRepository
 
-
-
-}
-
-class LibraryRepositoryImpl : LibraryRepository {
-
-}
+class LibraryRepositoryImpl : LibraryRepository

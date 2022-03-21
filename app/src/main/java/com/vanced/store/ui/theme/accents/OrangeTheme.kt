@@ -2,7 +2,6 @@ package com.vanced.store.ui.theme.accents
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
-import com.vanced.store.ui.theme.accents.*
 
 val OrangeLightThemeColors = lightColorScheme(
     primary = orange_md_theme_light_primary,

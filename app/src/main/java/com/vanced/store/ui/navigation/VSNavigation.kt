@@ -1,7 +1,9 @@
 package com.vanced.store.ui.navigation
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ContentTransform
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
@@ -25,7 +27,7 @@ fun VSNavigation(
         transitionSpec = transitionSpec
     ) { animatedCurrentItem ->
 //        saveableStateHolder.SaveableStateProvider(animatedCurrentItem.route) {
-            content(animatedCurrentItem)
+        content(animatedCurrentItem)
 //        }
     }
 }
