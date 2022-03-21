@@ -20,9 +20,11 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.vanced.store.R
 import com.vanced.store.domain.manager.BrowseLayoutMode
 import com.vanced.store.domain.model.BrowseAppModel
+import com.vanced.store.ui.component.VSSwipeRefresh
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.BrowseViewModel
 import com.vanced.store.ui.widget.LoadedGridBrowseAppCard
@@ -40,11 +42,12 @@ fun BrowseScreen(
     val scrollBehavior = remember(decayAnimationSpec) {
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec)
     }
+    val state = viewModel.state
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             AppBar(
-//                        searchButtonEnabled = !viewModel.screen.isLoading,
+                searchButtonEnabled = state.isBrowse,
                 onSearchClick = onSearchClick,
                 scrollBehavior = scrollBehavior,
                 layoutMode = viewModel.layoutMode,
@@ -54,22 +57,29 @@ fun BrowseScreen(
             )
         }
     ) {
-        val screenModifier = Modifier
-            .fillMaxSize()
-            .padding(it)
-        when (val state = viewModel.state) {
-            is BrowseViewModel.State.Loading -> {
-                BrowseScreenLoading(
-                    modifier = screenModifier,
-                    layoutMode = viewModel.layoutMode
-                )
+        VSSwipeRefresh(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            state = rememberSwipeRefreshState(state.isLoading),
+            onRefresh = {
+                viewModel.loadApps()
             }
-            is BrowseViewModel.State.Browse -> {
-                BrowseScreenApps(
-                    modifier = screenModifier,
-                    apps = state.apps,
-                    layoutMode = viewModel.layoutMode
-                )
+        ) {
+            when (state) {
+                is BrowseViewModel.State.Loading -> {
+                    BrowseScreenLoading(
+                        modifier = Modifier.fillMaxSize(),
+                        layoutMode = viewModel.layoutMode
+                    )
+                }
+                is BrowseViewModel.State.Browse -> {
+                    BrowseScreenApps(
+                        modifier = Modifier.fillMaxSize(),
+                        apps = state.apps,
+                        layoutMode = viewModel.layoutMode
+                    )
+                }
             }
         }
     }
