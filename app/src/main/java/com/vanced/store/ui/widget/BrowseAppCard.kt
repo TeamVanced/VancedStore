@@ -242,11 +242,12 @@ private fun ListDetailsLayout(
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.Bottom,
+        verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge)
     ) {
         icon()
         Column(
+            modifier = Modifier.padding(top = VSTheme.spacing.innerSmall),
             verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerMedium)
         ) {
             ProvideTextStyle(VSTheme.typography.titleMedium) {
