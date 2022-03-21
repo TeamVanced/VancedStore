@@ -1,5 +1,6 @@
 package com.vanced.store.di
 
+import com.vanced.store.domain.manager.PreferenceManager
 import com.vanced.store.domain.repository.BrowseRepository
 import com.vanced.store.ui.viewmodel.BrowseViewModel
 import com.vanced.store.ui.viewmodel.MainViewModel
@@ -14,9 +15,13 @@ val viewModelModule = module {
     }
 
     fun provideBrowseViewModel(
-        browseRepository: BrowseRepository
+        browseRepository: BrowseRepository,
+        preferenceManager: PreferenceManager,
     ): BrowseViewModel {
-        return BrowseViewModel(browseRepository)
+        return BrowseViewModel(
+            browseRepository = browseRepository,
+            preferenceManager = preferenceManager
+        )
     }
 
     fun provideSearchViewModel(): SearchViewModel {
@@ -24,6 +29,6 @@ val viewModelModule = module {
     }
 
     viewModel { provideMainViewModel() }
-    viewModel { provideBrowseViewModel(get()) }
+    viewModel { provideBrowseViewModel(get(), get()) }
     viewModel { provideSearchViewModel() }
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.vanced.store.R
+import com.vanced.store.domain.manager.BrowseLayoutMode
 import com.vanced.store.domain.model.BrowseAppModel
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.BrowseViewModel
@@ -72,7 +73,7 @@ fun BrowseScreen(
 fun BrowseScreenApps(
     modifier: Modifier = Modifier,
     apps: List<BrowseAppModel>,
-    layoutMode: BrowseViewModel.LayoutMode,
+    layoutMode: BrowseLayoutMode,
 ) {
     AnimatedContent(
         modifier = modifier,
@@ -80,7 +81,7 @@ fun BrowseScreenApps(
         transitionSpec = { layoutModeAnimationSpec() }
     ) { animatedLayoutMode ->
         when (animatedLayoutMode) {
-            BrowseViewModel.LayoutMode.LIST -> {
+            BrowseLayoutMode.LIST -> {
                 BrowseAppLazyColumn {
                     items(apps) { app ->
                         LoadedListBrowseAppCard(
@@ -93,7 +94,7 @@ fun BrowseScreenApps(
                     }
                 }
             }
-            BrowseViewModel.LayoutMode.GRID -> {
+            BrowseLayoutMode.GRID -> {
                 BrowseAppLazyVerticalGrid {
                     items(apps) { app ->
                         LoadedGridBrowseAppCard(
@@ -112,10 +113,10 @@ fun BrowseScreenApps(
 @Composable
 fun BrowseScreenLoading(
     modifier: Modifier = Modifier,
-    layoutMode: BrowseViewModel.LayoutMode,
+    layoutMode: BrowseLayoutMode,
 ) {
     when (layoutMode) {
-        BrowseViewModel.LayoutMode.LIST -> {
+        BrowseLayoutMode.LIST -> {
             BrowseAppLazyColumn(
                 modifier = modifier,
                 scrollEnabled = false
@@ -127,7 +128,7 @@ fun BrowseScreenLoading(
                 }
             }
         }
-        BrowseViewModel.LayoutMode.GRID -> {
+        BrowseLayoutMode.GRID -> {
             BrowseAppLazyVerticalGrid(
                 modifier = modifier,
                 scrollEnabled = false
@@ -143,8 +144,8 @@ fun BrowseScreenLoading(
 @Composable
 private fun AppBar(
     onSearchClick: () -> Unit,
-    onChangeLayoutMode: (BrowseViewModel.LayoutMode) -> Unit,
-    layoutMode: BrowseViewModel.LayoutMode,
+    onChangeLayoutMode: (BrowseLayoutMode) -> Unit,
+    layoutMode: BrowseLayoutMode,
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier,
     searchButtonEnabled: Boolean = true,
@@ -162,13 +163,13 @@ private fun AppBar(
                     transitionSpec = { layoutModeAnimationSpec() }
                 ) { animatedLayoutMode ->
                     when (animatedLayoutMode) {
-                        BrowseViewModel.LayoutMode.LIST -> {
+                        BrowseLayoutMode.LIST -> {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_list),
                                 contentDescription = null
                             )
                         }
-                        BrowseViewModel.LayoutMode.GRID -> {
+                        BrowseLayoutMode.GRID -> {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_grid),
                                 contentDescription = null
@@ -222,8 +223,8 @@ private fun BrowseAppLazyVerticalGrid(
     )
 }
 
-private fun AnimatedContentScope<BrowseViewModel.LayoutMode>.layoutModeAnimationSpec(): ContentTransform {
-    return if (BrowseViewModel.LayoutMode.LIST isTransitioningTo BrowseViewModel.LayoutMode.GRID) {
+private fun AnimatedContentScope<BrowseLayoutMode>.layoutModeAnimationSpec(): ContentTransform {
+    return if (BrowseLayoutMode.LIST isTransitioningTo BrowseLayoutMode.GRID) {
         slideIntoContainer(
             towards = AnimatedContentScope.SlideDirection.Start
         ) with slideOutOfContainer(

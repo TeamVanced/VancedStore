@@ -53,6 +53,7 @@ fun KotlinJvmOptions.optIn(library: String) {
 dependencies {
     Dependencies.Ktor.applyDependencies(this)
     Dependencies.AndroidxCore.applyDependencies(this)
+    Dependencies.AndroidxPreferences.applyDependencies(this)
     Dependencies.Compose.applyDependencies(this)
     Dependencies.Accompanist.applyDependencies(this)
     Dependencies.Koin.applyDependencies(this)

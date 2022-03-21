@@ -36,6 +36,20 @@ sealed class Dependencies {
         }
     }
 
+    object AndroidxPreferences : Dependencies() {
+        private const val version = "1.2.0"
+
+        private const val preference = "androidx.preference:preference:$version"
+        private const val preferenceKtx = "androidx.preference:preference-ktx:$version"
+
+        override fun applyDependencies(scope: DependencyHandlerScope) {
+            scope {
+                implementation(preference)
+                implementation(preferenceKtx)
+            }
+        }
+    }
+
     object Compose : Dependencies() {
         const val version = "1.2.0-alpha05"
 
