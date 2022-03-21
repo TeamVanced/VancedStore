@@ -14,26 +14,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.vanced.store.ui.theme.VSTheme
 
-interface SwitcherListScope {
+interface GroupListScope {
 
     fun item(
-        content: @Composable SwitcherItemScope.() -> Unit
+        content: @Composable GroupItemScope.() -> Unit
     )
 
     fun items(
         count: Int,
-        itemContent: @Composable SwitcherItemScope.(index: Int) -> Unit
+        itemContent: @Composable GroupItemScope.(index: Int) -> Unit
     )
 
 }
 
-class SwitcherListScopeImpl : SwitcherListScope {
+class GroupListScopeImpl : GroupListScope {
 
     private val _intervals = mutableListOf<DividedItemIntervalContent>()
     val intervals: List<DividedItemIntervalContent> = _intervals
 
     override fun item(
-        content: @Composable SwitcherItemScope.() -> Unit
+        content: @Composable GroupItemScope.() -> Unit
     ) {
         _intervals.add(
             DividedItemIntervalContent(
@@ -44,7 +44,7 @@ class SwitcherListScopeImpl : SwitcherListScope {
 
     override fun items(
         count: Int,
-        itemContent: @Composable SwitcherItemScope.(index: Int) -> Unit
+        itemContent: @Composable GroupItemScope.(index: Int) -> Unit
     ) {
         repeat(count) {
             _intervals.add(
@@ -56,40 +56,40 @@ class SwitcherListScopeImpl : SwitcherListScope {
     }
 }
 
-inline fun <T> SwitcherListScope.items(
+inline fun <T> GroupListScope.items(
     items: Array<T>,
-    crossinline itemContent: @Composable SwitcherItemScope.(item: T) -> Unit
+    crossinline itemContent: @Composable GroupItemScope.(item: T) -> Unit
 ) = items(items.size) {
     itemContent(items[it])
 }
 
-inline fun <T> SwitcherListScope.items(
+inline fun <T> GroupListScope.items(
     items: List<T>,
-    crossinline itemContent: @Composable SwitcherItemScope.(item: T) -> Unit
+    crossinline itemContent: @Composable GroupItemScope.(item: T) -> Unit
 ) = items(items.size) {
     itemContent(items[it])
 }
 
-interface SwitcherItemScope
-class SwitcherItemScopeImpl : SwitcherItemScope
+interface GroupItemScope
+class GroupItemScopeImpl : GroupItemScope
 
 class DividedItemIntervalContent(
-    val content: SwitcherItemScope.() -> @Composable () -> Unit
+    val content: GroupItemScope.() -> @Composable () -> Unit
 )
 
 private val SwitcherRowHeight = 48.dp
 private val SwitcherItemMinWidth = 56.dp
 
 @Composable
-fun SwitcherRow(
+fun GroupRow(
     modifier: Modifier = Modifier,
-    content: SwitcherListScope.() -> Unit
+    content: GroupListScope.() -> Unit
 ) {
-    val itemScope = remember { SwitcherItemScopeImpl() }
+    val itemScope = remember { GroupItemScopeImpl() }
     val latestContent by rememberUpdatedState(content)
     val items by remember {
         derivedStateOf {
-            val listScope = SwitcherListScopeImpl()
+            val listScope = GroupListScopeImpl()
             listScope.apply(latestContent)
             listScope.intervals
         }
@@ -123,7 +123,7 @@ fun SwitcherRow(
 
 @Suppress("unused")
 @Composable
-fun SwitcherItemScope.SwitcherItem(
+fun GroupItemScope.ToggleItem(
     selected: Boolean,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
