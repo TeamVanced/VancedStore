@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ContentTransform
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Modifier
 
 @Composable
@@ -16,18 +17,18 @@ fun VSNavigation(
     onBackPress: () -> Unit,
     content: @Composable (VSNavigationScreen) -> Unit,
 ) {
-//    val saveableStateHolder = rememberSaveableStateHolder()
-    BackHandler(enabled = backPressEnabled) {
-        onBackPress()
-    }
-
+    val saveableStateHolder = rememberSaveableStateHolder()
+    BackHandler(
+        enabled = backPressEnabled,
+        onBack = onBackPress
+    )
     AnimatedContent(
         modifier = modifier,
         targetState = navigator.current,
         transitionSpec = transitionSpec
     ) { animatedCurrentItem ->
-//        saveableStateHolder.SaveableStateProvider(animatedCurrentItem.route) {
-        content(animatedCurrentItem)
-//        }
+        saveableStateHolder.SaveableStateProvider(animatedCurrentItem) {
+            content(animatedCurrentItem)
+        }
     }
 }

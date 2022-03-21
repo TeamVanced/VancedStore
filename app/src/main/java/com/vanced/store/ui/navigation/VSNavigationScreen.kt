@@ -1,8 +1,10 @@
 package com.vanced.store.ui.navigation
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.vanced.store.R
+import kotlinx.parcelize.Parcelize
 
 sealed class VSNavigationScreen(
     val route: String,
@@ -12,7 +14,7 @@ sealed class VSNavigationScreen(
 
     @StringRes
     val labelRes: Int,
-) {
+): Parcelable {
 
     companion object {
         val bottomBarItems by lazy {
@@ -24,24 +26,28 @@ sealed class VSNavigationScreen(
         }
     }
 
+    @Parcelize
     object Browse : VSNavigationScreen(
         route = "browse",
         iconRes = R.drawable.ic_apps,
         labelRes = R.string.navigation_browse
     )
 
+    @Parcelize
     object Library : VSNavigationScreen(
         route = "library",
         iconRes = R.drawable.ic_library,
         labelRes = R.string.navigation_library
     )
 
+    @Parcelize
     object More : VSNavigationScreen(
         route = "more",
         iconRes = R.drawable.ic_more,
         labelRes = R.string.navigation_more
     )
 
+    @Parcelize
     object Search : VSNavigationScreen(
         route = "search",
         iconRes = 0,
