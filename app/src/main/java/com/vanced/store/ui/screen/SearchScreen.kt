@@ -17,13 +17,14 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.SearchViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun SearchScreen(
     onBackClick: () -> Unit,
-    viewModel: SearchViewModel,
     modifier: Modifier = Modifier
 ) {
+    val viewModel: SearchViewModel = getViewModel()
     Scaffold(
         modifier = modifier,
         topBar = {

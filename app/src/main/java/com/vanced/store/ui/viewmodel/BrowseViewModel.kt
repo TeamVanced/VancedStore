@@ -19,10 +19,10 @@ class BrowseViewModel(
 
     sealed class State {
         object Loading : State()
-        class Browse(val apps: List<BrowseAppModel>) : State()
+        class Loaded(val apps: List<BrowseAppModel>) : State()
 
         val isLoading get() = this is Loading
-        val isBrowse get() = this is Browse
+        val isLoaded get() = this is Loaded
     }
 
     var state by mutableStateOf<State>(State.Loading)
@@ -35,12 +35,16 @@ class BrowseViewModel(
         viewModelScope.launch {
             state = State.Loading
             delay(1000L)
-            state = State.Browse(browseRepository.getApps())
+            state = State.Loaded(browseRepository.getApps())
         }
     }
 
     fun switchLayoutMode(newMode: BrowseLayoutMode) {
         layoutMode = newMode
         preferenceManager.browseLayoutMode = newMode
+    }
+
+    init {
+        loadApps()
     }
 }

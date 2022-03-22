@@ -285,21 +285,3 @@ private fun GridDetailsLayout(
         }
     }
 }
-
-@Composable
-private fun PlaceholderBox(
-    modifier: Modifier = Modifier,
-    shape: Shape = CircleShape
-) {
-    Box(
-        modifier = modifier
-            .clip(shape)
-            .placeholder(
-                visible = true,
-                color = VSTheme.colorScheme.onSurfaceVariant,
-                highlight = PlaceholderHighlight.shimmer(
-                    highlightColor = VSTheme.colorScheme.onSurface
-                )
-            )
-    )
-}

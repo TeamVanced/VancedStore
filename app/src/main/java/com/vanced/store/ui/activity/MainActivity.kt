@@ -28,15 +28,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val mainViewModel: MainViewModel by viewModel()
-    private val browseViewModel: BrowseViewModel by viewModel()
-    private val searchViewModel: SearchViewModel by viewModel()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-
-        browseViewModel.loadApps()
 
         setContent {
             VSTheme(darkMode = true) {
@@ -92,7 +86,6 @@ class MainActivity : ComponentActivity() {
                             onSearchClick = {
                                 navigator.navigate(VSNavigationScreen.Search)
                             },
-                            viewModel = browseViewModel
                         )
                     }
                     is VSNavigationScreen.Library -> {
@@ -111,7 +104,6 @@ class MainActivity : ComponentActivity() {
                             onBackClick = {
                                 navigator.back()
                             },
-                            viewModel = searchViewModel
                         )
                     }
                     is VSNavigationScreen.Repositories -> {

@@ -1,53 +1,41 @@
 package com.vanced.store.ui.screen
 
-import androidx.compose.animation.*
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridScope
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.vanced.store.R
 import com.vanced.store.domain.manager.BrowseLayoutMode
 import com.vanced.store.domain.model.BrowseAppModel
 import com.vanced.store.ui.component.VSSwipeRefresh
-import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.BrowseViewModel
-import com.vanced.store.ui.widget.LoadedGridBrowseAppCard
-import com.vanced.store.ui.widget.LoadedListBrowseAppCard
-import com.vanced.store.ui.widget.LoadingGridBrowseAppCard
-import com.vanced.store.ui.widget.LoadingListBrowseAppCard
+import com.vanced.store.ui.widget.*
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun BrowseScreen(
     onSearchClick: () -> Unit,
-    viewModel: BrowseViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val decayAnimationSpec = rememberSplineBasedDecay<Float>()
-    val scrollBehavior = remember(decayAnimationSpec) {
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec)
-    }
+    val viewModel: BrowseViewModel = getViewModel()
     val state = viewModel.state
-    Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
+    ScreenScaffold(
+        modifier = modifier,
+        topBar = { scrollBehavior ->
             AppBar(
-                searchButtonEnabled = state.isBrowse,
+                searchButtonEnabled = state.isLoaded,
                 onSearchClick = onSearchClick,
                 scrollBehavior = scrollBehavior,
                 layoutMode = viewModel.layoutMode,
@@ -73,7 +61,7 @@ fun BrowseScreen(
                         layoutMode = viewModel.layoutMode
                     )
                 }
-                is BrowseViewModel.State.Browse -> {
+                is BrowseViewModel.State.Loaded -> {
                     BrowseScreenApps(
                         modifier = Modifier.fillMaxSize(),
                         apps = state.apps,
@@ -98,7 +86,7 @@ fun BrowseScreenApps(
     ) { animatedLayoutMode ->
         when (animatedLayoutMode) {
             BrowseLayoutMode.LIST -> {
-                BrowseAppLazyColumn {
+                CardLazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(apps) { app ->
                         LoadedListBrowseAppCard(
                             modifier = Modifier.fillParentMaxWidth(),
@@ -111,7 +99,7 @@ fun BrowseScreenApps(
                 }
             }
             BrowseLayoutMode.GRID -> {
-                BrowseAppLazyVerticalGrid {
+                CardLazyVerticalGrid(modifier = Modifier.fillMaxSize()) {
                     items(apps) { app ->
                         LoadedGridBrowseAppCard(
                             appName = app.appName,
@@ -133,7 +121,7 @@ fun BrowseScreenLoading(
 ) {
     when (layoutMode) {
         BrowseLayoutMode.LIST -> {
-            BrowseAppLazyColumn(
+            CardLazyColumn(
                 modifier = modifier,
                 scrollEnabled = false
             ) {
@@ -145,7 +133,7 @@ fun BrowseScreenLoading(
             }
         }
         BrowseLayoutMode.GRID -> {
-            BrowseAppLazyVerticalGrid(
+            CardLazyVerticalGrid(
                 modifier = modifier,
                 scrollEnabled = false
             ) {
@@ -166,10 +154,10 @@ private fun AppBar(
     modifier: Modifier = Modifier,
     searchButtonEnabled: Boolean = true,
 ) {
-    LargeTopAppBar(
+    ScreenTopAppBar(
         modifier = modifier,
         scrollBehavior = scrollBehavior,
-        title = { Text(stringResource(id = R.string.app_name)) },
+        title = stringResource(id = R.string.app_name),
         actions = {
             IconButton(onClick = {
                 onChangeLayoutMode(layoutMode.opposite())
@@ -204,38 +192,6 @@ private fun AppBar(
                 )
             }
         }
-    )
-}
-
-@Composable
-private fun BrowseAppLazyColumn(
-    modifier: Modifier = Modifier,
-    scrollEnabled: Boolean = true,
-    content: LazyListScope.() -> Unit
-) {
-    LazyColumn(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerLarge),
-        contentPadding = PaddingValues(VSTheme.spacing.outerEdge),
-        userScrollEnabled = scrollEnabled,
-        content = content
-    )
-}
-
-@Composable
-private fun BrowseAppLazyVerticalGrid(
-    modifier: Modifier = Modifier,
-    scrollEnabled: Boolean = true,
-    content: LazyGridScope.() -> Unit
-) {
-    LazyVerticalGrid(
-        modifier = modifier,
-        columns = GridCells.Adaptive(150.dp),
-        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerMedium),
-        horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerMedium),
-        contentPadding = PaddingValues(VSTheme.spacing.outerEdge),
-        userScrollEnabled = scrollEnabled,
-        content = content
     )
 }
 
