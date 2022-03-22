@@ -54,6 +54,13 @@ sealed class VSNavigationScreen(
         labelRes = 0
     )
 
+    @Parcelize
+    object Repositories : VSNavigationScreen(
+        route = "repositories",
+        iconRes = 0,
+        labelRes = 0,
+    )
+
     override fun equals(other: Any?): Boolean {
         if (other !is VSNavigationScreen)
             return false

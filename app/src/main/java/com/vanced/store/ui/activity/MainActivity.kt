@@ -19,10 +19,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.vanced.store.ui.navigation.VSNavigation
 import com.vanced.store.ui.navigation.VSNavigationScreen
 import com.vanced.store.ui.navigation.rememberVSNavigatorBackstack
-import com.vanced.store.ui.screen.BrowseScreen
-import com.vanced.store.ui.screen.LibraryScreen
-import com.vanced.store.ui.screen.MoreScreen
-import com.vanced.store.ui.screen.SearchScreen
+import com.vanced.store.ui.screen.*
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.BrowseViewModel
 import com.vanced.store.ui.viewmodel.MainViewModel
@@ -115,6 +112,11 @@ class MainActivity : ComponentActivity() {
                                 navigator.back()
                             },
                             viewModel = searchViewModel
+                        )
+                    }
+                    is VSNavigationScreen.Repositories -> {
+                        RepositoriesScreen(
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                 }
