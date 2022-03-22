@@ -19,7 +19,7 @@ class BrowseViewModel(
 
     sealed class State {
         object Loading : State()
-        data class Browse(val apps: List<BrowseAppModel>) : State()
+        class Browse(val apps: List<BrowseAppModel>) : State()
 
         val isLoading get() = this is Loading
         val isBrowse get() = this is Browse
