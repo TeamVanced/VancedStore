@@ -6,4 +6,11 @@
     <string name="navigation_more">More</string>
     <string name="navigation_repositories">Repositories</string>
 
+    <string name="dialog_save">Save</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <string name="repositories_add_title">New repository</string>
+    <string name="repositories_add_label_name">Name</string>
+    <string name="repositories_add_label_endpoint">Endpoint</string>
+
 </resources>

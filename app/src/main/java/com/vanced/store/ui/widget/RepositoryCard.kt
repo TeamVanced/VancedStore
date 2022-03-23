@@ -3,6 +3,7 @@ package com.vanced.store.ui.widget
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -66,8 +67,10 @@ private fun RepositoryCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(VSTheme.spacing.innerLarge),
-            horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge)
+                .padding(VSTheme.spacing.innerLarge)
+                .heightIn(min = 48.dp),
+            horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Box(modifier = Modifier.weight(1f)) {
                 ProvideTextStyle(VSTheme.typography.titleMedium) {

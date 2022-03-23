@@ -21,10 +21,6 @@ import com.vanced.store.ui.navigation.VSNavigationScreen
 import com.vanced.store.ui.navigation.rememberVSNavigatorBackstack
 import com.vanced.store.ui.screen.*
 import com.vanced.store.ui.theme.VSTheme
-import com.vanced.store.ui.viewmodel.BrowseViewModel
-import com.vanced.store.ui.viewmodel.MainViewModel
-import com.vanced.store.ui.viewmodel.SearchViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -65,9 +61,7 @@ class MainActivity : ComponentActivity() {
             }
         ) { paddingValues ->
             VSNavigation(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
+                modifier = Modifier.fillMaxSize(),
                 navigator = navigator,
                 transitionSpec = { navigationTransitionSpec(bottomBarItems) },
                 backPressEnabled = true,
@@ -82,7 +76,9 @@ class MainActivity : ComponentActivity() {
                 when (screen) {
                     is VSNavigationScreen.Browse -> {
                         BrowseScreen(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(paddingValues),
                             onSearchClick = {
                                 navigator.navigate(VSNavigationScreen.Search)
                             },
@@ -90,12 +86,19 @@ class MainActivity : ComponentActivity() {
                     }
                     is VSNavigationScreen.Library -> {
                         LibraryScreen(
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(paddingValues)
                         )
                     }
                     is VSNavigationScreen.More -> {
                         MoreScreen(
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(paddingValues),
+                            onRepositoriesClick = {
+                                navigator.navigate(VSNavigationScreen.Repositories)
+                            }
                         )
                     }
                     is VSNavigationScreen.Search -> {
@@ -108,7 +111,10 @@ class MainActivity : ComponentActivity() {
                     }
                     is VSNavigationScreen.Repositories -> {
                         RepositoriesScreen(
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize(),
+                            onBackClick = {
+                                navigator.back()
+                            }
                         )
                     }
                 }
@@ -185,8 +191,27 @@ class MainActivity : ComponentActivity() {
                     towards = AnimatedContentScope.SlideDirection.End
                 )
             }
+        } else if (initialState == VSNavigationScreen.More) {
+            slideIntoContainer(
+                towards = AnimatedContentScope.SlideDirection.Start,
+                initialOffset = { it / 3 }
+            ) + fadeIn() with slideOutOfContainer(
+                towards = AnimatedContentScope.SlideDirection.Start,
+                targetOffset = { it / 3 }
+            ) + fadeOut()
+        } else if (targetState == VSNavigationScreen.More) {
+            slideIntoContainer(
+                towards = AnimatedContentScope.SlideDirection.End,
+                initialOffset = { it / 3 }
+            ) + fadeIn() with slideOutOfContainer(
+                towards = AnimatedContentScope.SlideDirection.End,
+                targetOffset = { it / 3 }
+            ) + fadeOut()
         } else {
-            fadeIn() with fadeOut()
+            slideIntoContainer(
+                towards = AnimatedContentScope.SlideDirection.Up,
+                initialOffset = { it / 5 }
+            ) + fadeIn() with fadeOut()
         }
     }
 
