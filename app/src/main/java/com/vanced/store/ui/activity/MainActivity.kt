@@ -171,9 +171,9 @@ class MainActivity : ComponentActivity() {
         )
     }
 
-    private fun <S> AnimatedContentScope<S>.navigationTransitionSpec(
+    private fun AnimatedContentScope<VSNavigationScreen>.navigationTransitionSpec(
         bottomBarItems: Array<VSNavigationScreen>
-    ): ContentTransform where S : VSNavigationScreen {
+    ): ContentTransform {
         val initialIndex = bottomBarItems.indexOf(initialState)
         val targetIndex = bottomBarItems.indexOf(targetState)
 
