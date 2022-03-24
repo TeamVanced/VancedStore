@@ -14,35 +14,16 @@ import androidx.compose.ui.platform.LocalContext
 import com.vanced.store.ui.theme.accents.BlueDarkThemeColors
 import com.vanced.store.ui.theme.accents.BlueLightThemeColors
 
-private inline fun provideColorScheme(
-    dynamic: () -> ColorScheme,
-    static: () -> ColorScheme,
-    canUseDynamic: Boolean,
-): ColorScheme {
-    return if (canUseDynamic) {
-        dynamic()
-    } else {
-        static()
-    }
-}
-
 @Composable
 fun VSTheme(
     darkMode: Boolean,
     content: @Composable () -> Unit
 ) {
-    val context = LocalContext.current
     val isAndroid12OrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     MaterialTheme(
         colorScheme = provideColorScheme(
             canUseDynamic = isAndroid12OrHigher,
-            dynamic = {
-                if (darkMode) {
-                    dynamicDarkColorScheme(context)
-                } else {
-                    dynamicLightColorScheme(context)
-                }
-            },
+            dynamic = { dynamicColorScheme(darkMode) },
             static = {
                 if (darkMode) {
                     BlueDarkThemeColors
@@ -87,4 +68,26 @@ object VSTheme {
         @ReadOnlyComposable
         get() = LocalSpacing.current
 
+}
+
+private inline fun provideColorScheme(
+    dynamic: () -> ColorScheme,
+    static: () -> ColorScheme,
+    canUseDynamic: Boolean,
+): ColorScheme {
+    return if (canUseDynamic) {
+        dynamic()
+    } else {
+        static()
+    }
+}
+
+@Composable
+private fun dynamicColorScheme(darkMode: Boolean): ColorScheme {
+    val context = LocalContext.current
+    return if (darkMode) {
+        dynamicDarkColorScheme(context)
+    } else {
+        dynamicLightColorScheme(context)
+    }
 }
