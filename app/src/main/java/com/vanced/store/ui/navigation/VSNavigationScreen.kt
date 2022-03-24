@@ -61,6 +61,13 @@ sealed class VSNavigationScreen(
         labelRes = 0,
     )
 
+    @Parcelize
+    object Themes : VSNavigationScreen(
+        route = "themes",
+        iconRes = 0,
+        labelRes = 0
+    )
+
     override fun equals(other: Any?): Boolean {
         if (other !is VSNavigationScreen)
             return false

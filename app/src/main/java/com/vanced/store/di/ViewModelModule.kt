@@ -12,8 +12,12 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
 
-    fun provideMainViewModel(): MainViewModel {
-        return MainViewModel()
+    fun provideMainViewModel(
+        preferenceManager: PreferenceManager
+    ): MainViewModel {
+        return MainViewModel(
+            preferenceManager = preferenceManager
+        )
     }
 
     fun provideBrowseViewModel(
@@ -38,7 +42,7 @@ val viewModelModule = module {
         )
     }
 
-    viewModel { provideMainViewModel() }
+    viewModel { provideMainViewModel(get()) }
     viewModel { provideBrowseViewModel(get(), get()) }
     viewModel { provideSearchViewModel() }
     viewModel { provideRepositoriesViewModel(get()) }

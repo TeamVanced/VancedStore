@@ -5,6 +5,7 @@
     <string name="navigation_library">Library</string>
     <string name="navigation_more">More</string>
     <string name="navigation_repositories">Repositories</string>
+    <string name="navigation_themes">Themes</string>
 
     <string name="dialog_save">Save</string>
     <string name="dialog_cancel">Cancel</string>

@@ -3,6 +3,7 @@ package com.vanced.store.ui.theme
 import android.os.Build
 import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.foundation.gestures.OverScrollConfiguration
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -11,26 +12,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalContext
-import com.vanced.store.ui.theme.accents.BlueDarkThemeColors
-import com.vanced.store.ui.theme.accents.BlueLightThemeColors
+import com.vanced.store.domain.manager.ApplicationAccent
+import com.vanced.store.domain.manager.ApplicationTheme
+import com.vanced.store.ui.theme.accents.*
 
 @Composable
 fun VSTheme(
-    darkMode: Boolean,
+    theme: ApplicationTheme,
+    accent: ApplicationAccent,
     content: @Composable () -> Unit
 ) {
     val isAndroid12OrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     MaterialTheme(
         colorScheme = provideColorScheme(
             canUseDynamic = isAndroid12OrHigher,
-            dynamic = { dynamicColorScheme(darkMode) },
-            static = {
-                if (darkMode) {
-                    BlueDarkThemeColors
-                } else {
-                    BlueLightThemeColors
-                }
-            }
+            theme = theme,
+            accent = accent
         ),
         typography = VSTypography
     ) {
@@ -70,24 +67,72 @@ object VSTheme {
 
 }
 
-private inline fun provideColorScheme(
-    dynamic: () -> ColorScheme,
-    static: () -> ColorScheme,
+@Composable
+private fun provideColorScheme(
     canUseDynamic: Boolean,
+    theme: ApplicationTheme,
+    accent: ApplicationAccent
 ): ColorScheme {
+    val isDark = theme.isDark()
     return if (canUseDynamic) {
-        dynamic()
+        provideDynamicColorScheme(isDark)
     } else {
-        static()
+        provideStaticColorScheme(accent, isDark)
     }
 }
 
 @Composable
-private fun dynamicColorScheme(darkMode: Boolean): ColorScheme {
+fun provideDynamicColorScheme(isDark: Boolean): ColorScheme {
     val context = LocalContext.current
-    return if (darkMode) {
+    return if (isDark) {
         dynamicDarkColorScheme(context)
     } else {
         dynamicLightColorScheme(context)
+    }
+}
+
+@Composable
+fun provideStaticColorScheme(
+    accent: ApplicationAccent,
+    isDark: Boolean,
+): ColorScheme {
+    return when (accent) {
+        ApplicationAccent.BLUE -> {
+            if (isDark) {
+                BlueDarkThemeColors
+            } else {
+                BlueLightThemeColors
+            }
+        }
+        ApplicationAccent.ORANGE -> {
+            if (isDark) {
+                OrangeDarkThemeColors
+            } else {
+                OrangeLightThemeColors
+            }
+        }
+        ApplicationAccent.PINK -> {
+            if (isDark) {
+                PinkDarkThemeColors
+            } else {
+                PinkLightThemeColors
+            }
+        }
+        ApplicationAccent.PURPLE -> {
+            if (isDark) {
+                PurpleDarkThemeColors
+            } else {
+                PurpleLightThemeColors
+            }
+        }
+    }
+}
+
+@Composable
+fun ApplicationTheme.isDark(): Boolean {
+    return when (this) {
+        ApplicationTheme.DARK -> true
+        ApplicationTheme.SYSTEM -> isSystemInDarkTheme()
+        else -> false
     }
 }

@@ -15,8 +15,9 @@ import com.vanced.store.ui.widget.ScreenTopAppBar
 
 @Composable
 fun MoreScreen(
-    modifier: Modifier = Modifier,
     onRepositoriesClick: () -> Unit,
+    onThemesClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     ScreenScaffold(
         modifier = modifier,
@@ -33,6 +34,12 @@ fun MoreScreen(
                 RepositoriesItem(
                     modifier = Modifier.fillParentMaxWidth(),
                     onClick = onRepositoriesClick
+                )
+            }
+            item {
+                ThemesItem(
+                    modifier = Modifier.fillParentMaxWidth(),
+                    onClick = onThemesClick
                 )
             }
         }
@@ -60,6 +67,24 @@ private fun RepositoriesItem(
         modifier = modifier,
         onClick = onClick,
         title = { Text(stringResource(R.string.navigation_repositories)) },
+        trailing = {
+            Icon(
+                painter = painterResource(R.drawable.ic_navigate_next),
+                contentDescription = null
+            )
+        }
+    )
+}
+
+@Composable
+private fun ThemesItem(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Preference(
+        modifier = modifier,
+        onClick = onClick,
+        title = { Text(stringResource(R.string.navigation_themes)) },
         trailing = {
             Icon(
                 painter = painterResource(R.drawable.ic_navigate_next),

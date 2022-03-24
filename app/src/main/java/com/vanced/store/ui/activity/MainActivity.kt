@@ -21,22 +21,26 @@ import com.vanced.store.ui.navigation.VSNavigationScreen
 import com.vanced.store.ui.navigation.rememberVSNavigatorBackstack
 import com.vanced.store.ui.screen.*
 import com.vanced.store.ui.theme.VSTheme
+import com.vanced.store.ui.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
         setContent {
-            VSTheme(darkMode = true) {
+            VSTheme(
+                theme = viewModel.applicationTheme,
+                accent = viewModel.applicationAccent
+            ) {
                 val systemUiController = rememberSystemUiController()
                 val systemBarsColor = VSTheme.colorScheme.surface
                 SideEffect {
-                    systemUiController.setSystemBarsColor(
-                        color = systemBarsColor,
-                        darkIcons = false
-                    )
+                    systemUiController.setSystemBarsColor(systemBarsColor)
                 }
                 MainScreen()
             }
@@ -98,6 +102,9 @@ class MainActivity : ComponentActivity() {
                                 .padding(paddingValues),
                             onRepositoriesClick = {
                                 navigator.navigate(VSNavigationScreen.Repositories)
+                            },
+                            onThemesClick = {
+                                navigator.navigate(VSNavigationScreen.Themes)
                             }
                         )
                     }
@@ -115,6 +122,22 @@ class MainActivity : ComponentActivity() {
                             onBackClick = {
                                 navigator.back()
                             }
+                        )
+                    }
+                    is VSNavigationScreen.Themes -> {
+                        ThemesScreen(
+                            modifier = Modifier.fillMaxSize(),
+                            onBackClick = {
+                                navigator.back()
+                            },
+                            onThemeChange = {
+                                viewModel.updateTheme(it)
+                            },
+                            onAccentChange = {
+                                viewModel.updateAccent(it)
+                            },
+                            currentTheme = viewModel.applicationTheme,
+                            currentAccent = viewModel.applicationAccent
                         )
                     }
                 }
