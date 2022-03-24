@@ -59,7 +59,7 @@ private fun SearchBar(
     ) { field ->
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerSmall),
+            horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.extraSmall),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBackClick) {

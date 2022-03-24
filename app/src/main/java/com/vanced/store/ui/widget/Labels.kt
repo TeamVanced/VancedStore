@@ -33,8 +33,8 @@ fun Label(
             Row(
                 modifier = Modifier
                     .padding(
-                        horizontal = VSTheme.spacing.innerLarge,
-                        vertical = VSTheme.spacing.innerMedium
+                        horizontal = VSTheme.spacing.large,
+                        vertical = VSTheme.spacing.small
                     ),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,

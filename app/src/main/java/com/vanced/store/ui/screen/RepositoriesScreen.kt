@@ -149,7 +149,7 @@ private fun AddDialog(
         text = {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge),
+                verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 OutlinedTextField(

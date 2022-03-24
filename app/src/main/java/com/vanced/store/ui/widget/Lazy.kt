@@ -22,8 +22,8 @@ fun CardLazyColumn(
     LazyColumn(
         modifier = modifier,
         state = state,
-        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerLarge),
-        contentPadding = PaddingValues(VSTheme.spacing.outerEdge),
+        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.extraLarge),
+        contentPadding = PaddingValues(VSTheme.spacing.extraLarge),
         userScrollEnabled = scrollEnabled,
         content = content
     )
@@ -40,9 +40,9 @@ fun CardLazyVerticalGrid(
         modifier = modifier,
         state = state,
         columns = GridCells.Adaptive(150.dp),
-        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerMedium),
-        horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.outerMedium),
-        contentPadding = PaddingValues(VSTheme.spacing.outerEdge),
+        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium),
+        horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium),
+        contentPadding = PaddingValues(VSTheme.spacing.extraLarge),
         userScrollEnabled = scrollEnabled,
         content = content
     )

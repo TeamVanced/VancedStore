@@ -76,7 +76,7 @@ fun GroupItemScope.ToggleItem(
             .height(GroupRowContainerHeight)
             .background(color)
             .clickable(onClick = onClick, enabled = enabled)
-            .padding(horizontal = VSTheme.spacing.innerSmall),
+            .padding(horizontal = VSTheme.spacing.extraSmall),
         contentAlignment = Alignment.Center
     ) {
         icon()

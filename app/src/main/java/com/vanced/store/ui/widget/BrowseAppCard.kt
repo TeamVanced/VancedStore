@@ -11,13 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.placeholder
-import com.google.accompanist.placeholder.shimmer
 import com.vanced.store.ui.component.VSCard
 import com.vanced.store.ui.component.VSElevatedCard
 import com.vanced.store.ui.theme.VSTheme
@@ -213,19 +209,19 @@ private fun BaseBrowseAppCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(VSTheme.spacing.innerEdge),
-            verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge)
+                .padding(VSTheme.spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium)
         ) {
             details()
             Divider(
                 modifier = Modifier.padding(
-                    vertical = VSTheme.spacing.innerMedium
+                    vertical = VSTheme.spacing.small
                 ),
             )
             FlowRow(
                 mainAxisAlignment = FlowMainAxisAlignment.Center,
-                mainAxisSpacing = VSTheme.spacing.innerMedium,
-                crossAxisSpacing = VSTheme.spacing.innerSmall
+                mainAxisSpacing = VSTheme.spacing.small,
+                crossAxisSpacing = VSTheme.spacing.extraSmall
             ) {
                 labels()
             }
@@ -243,12 +239,12 @@ private fun ListDetailsLayout(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.Top,
-        horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge)
+        horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium)
     ) {
         icon()
         Column(
-            modifier = Modifier.padding(top = VSTheme.spacing.innerSmall),
-            verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerMedium)
+            modifier = Modifier.padding(top = VSTheme.spacing.extraSmall),
+            verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.small)
         ) {
             ProvideTextStyle(VSTheme.typography.titleMedium) {
                 title()
@@ -269,11 +265,11 @@ private fun GridDetailsLayout(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge),
+        verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge)
+            horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium)
         ) {
             icon()
             ProvideTextStyle(VSTheme.typography.titleMedium) {

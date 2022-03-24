@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalContext
 import com.vanced.store.ui.theme.accents.BlueDarkThemeColors
 import com.vanced.store.ui.theme.accents.BlueLightThemeColors
@@ -67,15 +68,23 @@ fun VSTheme(
 object VSTheme {
 
     val colorScheme
-        @Composable get() = MaterialTheme.colorScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.colorScheme
 
     val typography
-        @Composable get() = MaterialTheme.typography
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.typography
 
     val shapes
-        @Composable get() = LocalShapes.current
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalShapes.current
 
     val spacing
-        @Composable get() = LocalSpacing.current
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSpacing.current
 
 }
