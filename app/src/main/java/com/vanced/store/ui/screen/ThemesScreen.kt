@@ -1,6 +1,5 @@
 package com.vanced.store.ui.screen
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -8,7 +7,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -109,44 +107,56 @@ private fun AccentCard(
     theme: ApplicationTheme,
     modifier: Modifier = Modifier,
 ) {
-    val containerColor by animateColorAsState(
-        if (selected)
-            VSTheme.colorScheme.primaryContainer
-        else
-            VSTheme.colorScheme.surface
-    )
-    val contentColor by animateColorAsState(contentColorFor(containerColor))
-
     VSOutlinedCard(
         modifier = modifier,
         onClick = onClick,
-        containerColor = containerColor,
-        contentColor = contentColor,
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.outlinedCardElevation(
+            defaultElevation = if (selected) 3.dp else 0.dp
+        )
     ) {
         Column(
             modifier = Modifier.padding(VSTheme.spacing.medium),
             verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium)
         ) {
             VSTheme(theme = theme, accent = accent) {
-                val boxColor by animateColorAsState(
-                    if (selected)
-                        VSTheme.colorScheme.onPrimaryContainer
-                    else
-                        VSTheme.colorScheme.primaryContainer
-                )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    repeat(3) {
-                        Box(
-                            modifier = Modifier
-                                .height(36.dp)
-                                .fillMaxWidth()
-                                .clip(VSTheme.shapes.medium)
-                                .background(color = boxColor)
-                        )
+                    repeat(3) { index ->
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            tonalElevation = 5.dp,
+                            shadowElevation = if (selected) 3.dp else 0.dp,
+                            shape = VSTheme.shapes.large
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(VSTheme.spacing.medium),
+                                horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clip(VSTheme.shapes.medium)
+                                        .background(LocalContentColor.current)
+                                )
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth(
+                                            fraction = when (index) {
+                                                0 -> 0.8f
+                                                1 -> 0.6f
+                                                else -> 0.7f
+                                            }
+                                        )
+                                        .height(20.dp)
+                                        .clip(VSTheme.shapes.large)
+                                        .background(LocalContentColor.current)
+                                )
+                            }
+                        }
                     }
                 }
             }
