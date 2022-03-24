@@ -59,10 +59,7 @@ private fun RepositoryCard(
     modifier: Modifier = Modifier,
 ) {
     VSElevatedCard(
-        modifier = modifier,
-        elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = 2.dp
-        )
+        modifier = modifier
     ) {
         Row(
             modifier = Modifier

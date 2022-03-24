@@ -202,10 +202,7 @@ private fun BaseBrowseAppCard(
 ) {
     VSElevatedCard(
         modifier = modifier,
-        onClick = onClick,
-        elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = 2.dp
-        )
+        onClick = onClick
     ) {
         Column(
             modifier = Modifier

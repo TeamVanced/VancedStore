@@ -60,7 +60,9 @@ fun VSElevatedCard(
     shape: Shape = VSTheme.shapes.large,
     containerColor: Color = VSTheme.colorScheme.surface,
     contentColor: Color = contentColorFor(containerColor),
-    elevation: CardElevation = CardDefaults.elevatedCardElevation(),
+    elevation: CardElevation = CardDefaults.elevatedCardElevation(
+        defaultElevation = 4.dp
+    ),
     content: @Composable () -> Unit
 ) {
     if (onClick != null && interactionSource != null) {

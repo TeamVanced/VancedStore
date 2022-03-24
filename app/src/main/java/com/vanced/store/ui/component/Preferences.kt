@@ -18,10 +18,7 @@ fun Preference(
 ) {
     VSElevatedCard(
         modifier = modifier,
-        onClick = onClick,
-        elevation = CardDefaults.elevatedCardElevation(
-            defaultElevation = 2.dp
-        )
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier
