@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.vanced.store.R
 import com.vanced.store.db.entity.Repository
-import com.vanced.store.ui.component.VSOutlinedTextField
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.RepositoriesViewModel
 import com.vanced.store.ui.widget.*
@@ -36,14 +35,7 @@ fun RepositoriesScreen(
                 onBackClick = onBackClick
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { addDialogVisible = true }) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_add),
-                    contentDescription = null
-                )
-            }
-        }
+        floatingActionButton = { FAB(onClick = { addDialogVisible = true }) }
     ) { paddingValues ->
         Body(
             modifier = Modifier
@@ -129,7 +121,7 @@ private fun ScreenLoaded(
 }
 
 @Composable
-fun AddDialog(
+private fun AddDialog(
     onDismissRequest: () -> Unit,
     onCancel: () -> Unit,
     onSave: (name: String, endpoint: String) -> Unit,
@@ -160,12 +152,12 @@ fun AddDialog(
                 verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.innerLarge),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                VSOutlinedTextField(
+                OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
                     label = { Text(stringResource(R.string.repositories_add_label_name)) }
                 )
-                VSOutlinedTextField(
+                OutlinedTextField(
                     value = endpoint,
                     onValueChange = { endpoint = it },
                     label = { Text(stringResource(R.string.repositories_add_label_endpoint)) }
@@ -194,4 +186,14 @@ private fun AppBar(
         },
         scrollBehavior = scrollBehavior
     )
+}
+
+@Composable
+private fun FAB(onClick: () -> Unit) {
+    FloatingActionButton(onClick = onClick) {
+        Icon(
+            painter = painterResource(R.drawable.ic_add),
+            contentDescription = null
+        )
+    }
 }

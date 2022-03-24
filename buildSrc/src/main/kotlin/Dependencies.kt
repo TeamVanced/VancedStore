@@ -67,14 +67,14 @@ sealed class Dependencies {
     }
 
     object Compose : Dependencies() {
-        const val version = "1.2.0-alpha05"
+        const val version = "1.2.0-alpha06"
 
         private const val activity = "androidx.activity:activity-compose:1.4.0"
         private const val animations = "androidx.compose.animation:animation:$version"
         private const val foundation = "androidx.compose.foundation:foundation:$version"
         private const val runtime = "androidx.compose.runtime:runtime:$version"
         private const val material = "androidx.compose.material:material:$version"
-        private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha07"
+        private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha08"
 
         override fun applyDependencies(scope: DependencyHandlerScope) {
             scope {
