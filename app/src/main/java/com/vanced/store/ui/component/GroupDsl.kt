@@ -1,6 +1,5 @@
 package com.vanced.store.ui.component
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -64,18 +63,12 @@ fun GroupItemScope.ToggleItem(
     onClick: () -> Unit,
     icon: @Composable () -> Unit
 ) {
-    val containerColor by animateColorAsState(
-        if (selected)
-            VSTheme.colorScheme.primaryContainer
-        else
-            VSTheme.colorScheme.surface
-    )
     Surface(
         modifier = modifier,
         onClick = onClick,
         enabled = enabled,
         shape = RectangleShape,
-        color = containerColor
+        tonalElevation = if (selected) 5.dp else 0.dp
     ) {
         Box(
             modifier = Modifier
