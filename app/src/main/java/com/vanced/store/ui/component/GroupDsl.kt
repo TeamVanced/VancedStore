@@ -2,15 +2,13 @@ package com.vanced.store.ui.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.vanced.store.ui.theme.VSTheme
 
@@ -31,15 +29,14 @@ fun GroupRow(
             listScope.intervals
         }
     }
-    Surface(
-        modifier = modifier
-            .height(GroupRowContainerHeight)
-            .widthIn(min = GroupRowItemMinWidth)
-            .clip(RoundedCornerShape(12.dp)),
-        tonalElevation = 3.dp
+    VSOutlinedCard(
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp)
     ) {
         Row(
-            modifier = Modifier.width(IntrinsicSize.Max),
+            modifier = Modifier
+                .height(GroupRowContainerHeight)
+                .widthIn(min = GroupRowItemMinWidth),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             items.forEachIndexed { index, content ->
@@ -47,8 +44,8 @@ fun GroupRow(
                     //Divider
                     Box(
                         modifier = Modifier
-                            .background(color = VSTheme.colorScheme.surface)
-                            .width(2.dp)
+                            .background(color = VSTheme.colorScheme.outline)
+                            .width(1.dp)
                             .height(GroupRowContainerHeight)
                     )
                 }
@@ -67,19 +64,28 @@ fun GroupItemScope.ToggleItem(
     onClick: () -> Unit,
     icon: @Composable () -> Unit
 ) {
-    val color by animateColorAsState(
-        if (selected) VSTheme.colorScheme.secondaryContainer else Color.Transparent
+    val containerColor by animateColorAsState(
+        if (selected)
+            VSTheme.colorScheme.primaryContainer
+        else
+            VSTheme.colorScheme.surface
     )
-    Box(
-        modifier = modifier
-            .widthIn(min = GroupRowItemMinWidth)
-            .height(GroupRowContainerHeight)
-            .background(color)
-            .clickable(onClick = onClick, enabled = enabled)
-            .padding(horizontal = VSTheme.spacing.extraSmall),
-        contentAlignment = Alignment.Center
+    Surface(
+        modifier = modifier,
+        onClick = onClick,
+        enabled = enabled,
+        shape = RectangleShape,
+        color = containerColor
     ) {
-        icon()
+        Box(
+            modifier = Modifier
+                .widthIn(min = GroupRowItemMinWidth)
+                .height(GroupRowContainerHeight)
+                .padding(horizontal = VSTheme.spacing.medium),
+            contentAlignment = Alignment.Center
+        ) {
+            icon()
+        }
     }
 }
 
