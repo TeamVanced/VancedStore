@@ -30,6 +30,7 @@ fun VSCard(
             modifier = modifier,
             interactionSource = interactionSource,
             shape = shape,
+            containerColor = containerColor,
             contentColor = contentColor,
             border = border,
             elevation = elevation,
@@ -40,6 +41,7 @@ fun VSCard(
         Card(
             modifier = modifier,
             shape = shape,
+            containerColor = containerColor,
             contentColor = contentColor,
             border = border,
             elevation = elevation,
@@ -67,6 +69,7 @@ fun VSElevatedCard(
             modifier = modifier,
             interactionSource = interactionSource,
             shape = shape,
+            containerColor = containerColor,
             contentColor = contentColor,
             elevation = elevation,
         ) {
@@ -76,6 +79,7 @@ fun VSElevatedCard(
         ElevatedCard(
             modifier = modifier,
             shape = shape,
+            containerColor = containerColor,
             contentColor = contentColor,
             elevation = elevation,
         ) {
@@ -103,6 +107,7 @@ fun VSOutlinedCard(
             modifier = modifier,
             interactionSource = interactionSource,
             shape = shape,
+            containerColor = containerColor,
             contentColor = contentColor,
             border = border,
             elevation = elevation,
@@ -113,6 +118,7 @@ fun VSOutlinedCard(
         OutlinedCard(
             modifier = modifier,
             shape = shape,
+            containerColor = containerColor,
             contentColor = contentColor,
             border = border,
             elevation = elevation,
