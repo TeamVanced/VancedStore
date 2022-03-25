@@ -23,8 +23,8 @@ import org.koin.androidx.compose.getViewModel
 fun RepositoriesScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: RepositoriesViewModel = getViewModel()
 ) {
-    val viewModel: RepositoriesViewModel = getViewModel()
     val state by viewModel.state.collectAsState()
     var addDialogVisible by remember { mutableStateOf(false) }
     ScreenScaffold(

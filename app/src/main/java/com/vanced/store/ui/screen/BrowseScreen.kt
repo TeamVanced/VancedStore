@@ -28,8 +28,8 @@ import org.koin.androidx.compose.getViewModel
 fun BrowseScreen(
     onSearchClick: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: BrowseViewModel = getViewModel()
 ) {
-    val viewModel: BrowseViewModel = getViewModel()
     val state = viewModel.state
     ScreenScaffold(
         modifier = modifier,

@@ -22,9 +22,9 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun SearchScreen(
     onBackClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = getViewModel()
 ) {
-    val viewModel: SearchViewModel = getViewModel()
     Scaffold(
         modifier = modifier,
         topBar = {
