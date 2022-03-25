@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import com.vanced.store.ui.component.VSCard
+import com.vanced.store.ui.component.VSOutlinedCard
 import com.vanced.store.ui.theme.VSTheme
 
 @Composable
@@ -23,7 +23,7 @@ fun Label(
     contentColor: Color = contentColorFor(containerColor),
     content: @Composable RowScope.() -> Unit,
 ) {
-    VSCard(
+    VSOutlinedCard(
         modifier = modifier,
         shape = shape,
         containerColor = containerColor,

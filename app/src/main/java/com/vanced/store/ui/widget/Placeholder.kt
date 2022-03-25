@@ -21,9 +21,9 @@ fun PlaceholderBox(
             .clip(shape)
             .placeholder(
                 visible = true,
-                color = VSTheme.colorScheme.onSurfaceVariant,
+                color = VSTheme.colorScheme.onSurface,
                 highlight = PlaceholderHighlight.shimmer(
-                    highlightColor = VSTheme.colorScheme.onSurface
+                    highlightColor = VSTheme.colorScheme.onSurfaceVariant
                 )
             )
     )

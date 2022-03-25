@@ -1,12 +1,10 @@
 package com.vanced.store.ui.widget
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ProvideTextStyle
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +12,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
-import com.vanced.store.ui.component.VSCard
 import com.vanced.store.ui.component.VSElevatedCard
 import com.vanced.store.ui.theme.VSTheme
 
@@ -32,10 +29,12 @@ fun LoadedListBrowseAppCard(
         details = {
             ListDetailsLayout(
                 icon = {
-                    VSCard(
-                        modifier = Modifier.size(48.dp),
-                        shape = RoundedCornerShape(16.dp)
-                    ) {}
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                            .background(LocalContentColor.current),
+                    )
                 },
                 title = { Text(appName) },
                 description = { Text(appDescription) }
@@ -60,10 +59,12 @@ fun LoadedGridBrowseAppCard(
         details = {
             GridDetailsLayout(
                 icon = {
-                    VSCard(
-                        modifier = Modifier.size(36.dp),
-                        shape = CircleShape
-                    ) {}
+                    Box(
+                        modifier = Modifier
+                            .size(36.dp)
+                            .clip(CircleShape)
+                            .background(LocalContentColor.current),
+                    )
                 },
                 title = { Text(appName) },
                 description = { Text(appDescription) }
