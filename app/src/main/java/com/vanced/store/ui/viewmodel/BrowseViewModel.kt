@@ -19,7 +19,10 @@ class BrowseViewModel(
 
     sealed class State {
         object Loading : State()
-        class Loaded(val apps: List<BrowseAppModel>) : State()
+        class Loaded(
+            val pinnedApps: List<BrowseAppModel>,
+            val repositoryApps: List<BrowseAppModel>,
+        ) : State()
 
         val isLoading get() = this is Loading
         val isLoaded get() = this is Loaded
@@ -35,7 +38,10 @@ class BrowseViewModel(
         viewModelScope.launch {
             state = State.Loading
             delay(1000L)
-            state = State.Loaded(browseRepository.getApps())
+            state = State.Loaded(
+                pinnedApps = browseRepository.getPinnedApps(),
+                repositoryApps = browseRepository.getApps()
+            )
         }
     }
 

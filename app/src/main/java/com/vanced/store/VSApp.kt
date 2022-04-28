@@ -18,7 +18,8 @@ class VSApp : Application() {
                 repositoryModule,
                 viewModelModule,
                 managerModule,
-                databaseModule
+                databaseModule,
+                serviceModule
             )
         }
     }

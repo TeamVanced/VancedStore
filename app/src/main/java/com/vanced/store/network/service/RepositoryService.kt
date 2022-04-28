@@ -2,8 +2,14 @@ package com.vanced.store.network.service
 
 import io.ktor.client.*
 
-interface BrowseService
+interface RepositoryService {
 
-class BrowseServiceImpl(
+
+
+}
+
+class RepositoryServiceImpl(
     private val client: HttpClient
-) : BrowseService
+) : RepositoryService {
+
+}

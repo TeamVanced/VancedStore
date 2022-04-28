@@ -153,7 +153,7 @@ private fun BaseLoadedBrowseAppCard(
     BaseBrowseAppCard(
         modifier = modifier,
         details = details,
-        labels = {
+        labels = if (supportsNonroot || supportsRoot) {{
             if (supportsNonroot) {
                 Label {
                     Text(text = "Nonroot")
@@ -164,7 +164,7 @@ private fun BaseLoadedBrowseAppCard(
                     Text(text = "Root")
                 }
             }
-        },
+        }} else null,
         onClick = onClick
     )
 }
@@ -197,7 +197,7 @@ private fun BaseLoadingBrowseAppCard(
 @Composable
 private fun BaseBrowseAppCard(
     details: @Composable () -> Unit,
-    labels: @Composable () -> Unit,
+    labels: (@Composable () -> Unit)?,
     onClick: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
@@ -206,22 +206,23 @@ private fun BaseBrowseAppCard(
         onClick = onClick
     ) {
         Column(
-            modifier = Modifier
-                .padding(VSTheme.spacing.medium),
+            modifier = Modifier.padding(VSTheme.spacing.medium),
             verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium)
         ) {
             details()
-            Divider(
-                modifier = Modifier.padding(
-                    vertical = VSTheme.spacing.small
-                ),
-            )
-            FlowRow(
-                mainAxisAlignment = FlowMainAxisAlignment.Center,
-                mainAxisSpacing = VSTheme.spacing.small,
-                crossAxisSpacing = VSTheme.spacing.extraSmall
-            ) {
-                labels()
+            if (labels != null) {
+                Divider(
+                    modifier = Modifier.padding(
+                        vertical = VSTheme.spacing.small
+                    ),
+                )
+                FlowRow(
+                    mainAxisAlignment = FlowMainAxisAlignment.Center,
+                    mainAxisSpacing = VSTheme.spacing.small,
+                    crossAxisSpacing = VSTheme.spacing.extraSmall
+                ) {
+                    labels()
+                }
             }
         }
     }

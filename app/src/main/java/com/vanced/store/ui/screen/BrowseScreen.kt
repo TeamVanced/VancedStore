@@ -6,8 +6,10 @@ import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.with
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -20,6 +22,7 @@ import com.vanced.store.R
 import com.vanced.store.domain.manager.BrowseLayoutMode
 import com.vanced.store.domain.model.BrowseAppModel
 import com.vanced.store.ui.component.VSSwipeRefresh
+import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.BrowseViewModel
 import com.vanced.store.ui.widget.*
 import org.koin.androidx.compose.getViewModel
@@ -64,7 +67,8 @@ fun BrowseScreen(
                 is BrowseViewModel.State.Loaded -> {
                     BrowseScreenApps(
                         modifier = Modifier.fillMaxSize(),
-                        apps = state.apps,
+                        pinnedApps = state.pinnedApps,
+                        repositoryApps = state.repositoryApps,
                         layoutMode = viewModel.layoutMode
                     )
                 }
@@ -75,9 +79,10 @@ fun BrowseScreen(
 
 @Composable
 fun BrowseScreenApps(
-    modifier: Modifier = Modifier,
-    apps: List<BrowseAppModel>,
+    pinnedApps: List<BrowseAppModel>,
+    repositoryApps: List<BrowseAppModel>,
     layoutMode: BrowseLayoutMode,
+    modifier: Modifier = Modifier,
 ) {
     AnimatedContent(
         modifier = modifier,
@@ -87,7 +92,27 @@ fun BrowseScreenApps(
         when (animatedLayoutMode) {
             BrowseLayoutMode.LIST -> {
                 CardLazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(apps) { app ->
+                    items(pinnedApps) { app ->
+                        LoadedListBrowseAppCard(
+                            modifier = Modifier.fillParentMaxWidth(),
+                            appName = app.appName,
+                            appDescription = app.appDescription,
+                            supportsNonroot = app.supportsNonroot,
+                            supportsRoot = app.supportsRoot
+                        )
+                    }
+
+                    if (pinnedApps.isNotEmpty() && repositoryApps.isNotEmpty()) {
+                        item {
+                            Divider(
+                                modifier = Modifier
+                                    .fillParentMaxWidth()
+                                    .padding(horizontal = VSTheme.spacing.large)
+                            )
+                        }
+                    }
+
+                    items(repositoryApps) { app ->
                         LoadedListBrowseAppCard(
                             modifier = Modifier.fillParentMaxWidth(),
                             appName = app.appName,
@@ -100,7 +125,28 @@ fun BrowseScreenApps(
             }
             BrowseLayoutMode.GRID -> {
                 CardLazyVerticalGrid(modifier = Modifier.fillMaxSize()) {
-                    items(apps) { app ->
+                    items(pinnedApps) { app ->
+                        LoadedGridBrowseAppCard(
+                            appName = app.appName,
+                            appDescription = app.appDescription,
+                            supportsNonroot = app.supportsNonroot,
+                            supportsRoot = app.supportsRoot
+                        )
+                    }
+
+                    if (pinnedApps.isNotEmpty() && repositoryApps.isNotEmpty()) {
+                        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
+                            Divider(
+                                modifier = Modifier
+                                    .padding(
+                                        horizontal = VSTheme.spacing.large,
+                                        vertical = VSTheme.spacing.small
+                                    )
+                            )
+                        }
+                    }
+
+                    items(repositoryApps) { app ->
                         LoadedGridBrowseAppCard(
                             appName = app.appName,
                             appDescription = app.appDescription,
