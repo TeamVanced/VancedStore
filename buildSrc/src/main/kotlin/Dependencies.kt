@@ -3,7 +3,7 @@ import org.gradle.kotlin.dsl.DependencyHandlerScope
 sealed class Dependencies {
 
     object Ktor : Dependencies() {
-        private const val version = "2.0.0-beta-1"
+        private const val version = "2.0.0"
 
         private const val ktorCore = "io.ktor:ktor-client-core:$version"
         private const val ktorAndroid = "io.ktor:ktor-client-android:$version"
@@ -67,14 +67,14 @@ sealed class Dependencies {
     }
 
     object Compose : Dependencies() {
-        const val version = "1.2.0-alpha06"
+        const val version = "1.2.0-alpha08"
 
         private const val activity = "androidx.activity:activity-compose:1.4.0"
         private const val animations = "androidx.compose.animation:animation:$version"
         private const val foundation = "androidx.compose.foundation:foundation:$version"
         private const val runtime = "androidx.compose.runtime:runtime:$version"
         private const val material = "androidx.compose.material:material:$version"
-        private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha08"
+        private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha10"
 
         override fun applyDependencies(scope: DependencyHandlerScope) {
             scope {
@@ -89,7 +89,7 @@ sealed class Dependencies {
     }
 
     object Accompanist : Dependencies() {
-        private const val version = "0.24.4-alpha"
+        private const val version = "0.24.7-alpha"
 
         private const val swiperefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
         private const val placeholderMaterial = "com.google.accompanist:accompanist-placeholder-material:$version"
