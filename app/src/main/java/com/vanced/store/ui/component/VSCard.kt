@@ -6,7 +6,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.vanced.store.ui.theme.VSTheme
@@ -18,10 +17,9 @@ fun VSCard(
     interactionSource: MutableInteractionSource? =
         remember { if (onClick != null) MutableInteractionSource() else null },
     shape: Shape = VSTheme.shapes.large,
-    containerColor: Color = VSTheme.colorScheme.surface,
-    contentColor: Color = contentColorFor(containerColor),
     border: BorderStroke? = null,
     elevation: CardElevation = CardDefaults.cardElevation(),
+    colors: CardColors = CardDefaults.cardColors(),
     content: @Composable () -> Unit
 ) {
     if (onClick != null && interactionSource != null) {
@@ -30,10 +28,9 @@ fun VSCard(
             modifier = modifier,
             interactionSource = interactionSource,
             shape = shape,
-            containerColor = containerColor,
-            contentColor = contentColor,
             border = border,
             elevation = elevation,
+            colors = colors,
         ) {
             content()
         }
@@ -41,10 +38,9 @@ fun VSCard(
         Card(
             modifier = modifier,
             shape = shape,
-            containerColor = containerColor,
-            contentColor = contentColor,
             border = border,
             elevation = elevation,
+            colors = colors,
         ) {
             content()
         }
@@ -58,11 +54,10 @@ fun VSElevatedCard(
     interactionSource: MutableInteractionSource? =
         remember { if (onClick != null) MutableInteractionSource() else null },
     shape: Shape = VSTheme.shapes.large,
-    containerColor: Color = VSTheme.colorScheme.surface,
-    contentColor: Color = contentColorFor(containerColor),
     elevation: CardElevation = CardDefaults.elevatedCardElevation(
         defaultElevation = 4.dp
     ),
+    colors: CardColors = CardDefaults.cardColors(),
     content: @Composable () -> Unit
 ) {
     if (onClick != null && interactionSource != null) {
@@ -71,9 +66,8 @@ fun VSElevatedCard(
             modifier = modifier,
             interactionSource = interactionSource,
             shape = shape,
-            containerColor = containerColor,
-            contentColor = contentColor,
             elevation = elevation,
+            colors = colors,
         ) {
             content()
         }
@@ -81,9 +75,8 @@ fun VSElevatedCard(
         ElevatedCard(
             modifier = modifier,
             shape = shape,
-            containerColor = containerColor,
-            contentColor = contentColor,
             elevation = elevation,
+            colors = colors,
         ) {
             content()
         }
@@ -97,10 +90,9 @@ fun VSOutlinedCard(
     interactionSource: MutableInteractionSource? =
         remember { if (onClick != null) MutableInteractionSource() else null },
     shape: Shape = VSTheme.shapes.large,
-    containerColor: Color = VSTheme.colorScheme.surface,
-    contentColor: Color = contentColorFor(containerColor),
     border: BorderStroke = BorderStroke(1.dp, VSTheme.colorScheme.outline),
     elevation: CardElevation = CardDefaults.outlinedCardElevation(),
+    colors: CardColors = CardDefaults.cardColors(),
     content: @Composable () -> Unit
 ) {
     if (onClick != null && interactionSource != null) {
@@ -109,10 +101,9 @@ fun VSOutlinedCard(
             modifier = modifier,
             interactionSource = interactionSource,
             shape = shape,
-            containerColor = containerColor,
-            contentColor = contentColor,
             border = border,
             elevation = elevation,
+            colors = colors,
         ) {
             content()
         }
@@ -120,10 +111,9 @@ fun VSOutlinedCard(
         OutlinedCard(
             modifier = modifier,
             shape = shape,
-            containerColor = containerColor,
-            contentColor = contentColor,
             border = border,
             elevation = elevation,
+            colors = colors,
         ) {
             content()
         }
