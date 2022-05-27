@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanced.store.db.RepositoryDatabase
 import com.vanced.store.db.dao.RepositoryDao
-import com.vanced.store.db.entity.Repository
+import com.vanced.store.db.entity.EntityRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +16,7 @@ class RepositoriesViewModel(
 
     sealed class State {
         object Loading : State()
-        class Loaded(val repositories: List<Repository>) : State()
+        class Loaded(val repositories: List<EntityRepository>) : State()
 
         val isLoading get() = this is Loading
         val isLoaded get() = this is Loaded
@@ -33,10 +33,10 @@ class RepositoriesViewModel(
         }
     }
 
-    fun deleteRepo(repository: Repository) {
+    fun deleteRepo(entityRepository: EntityRepository) {
         viewModelScope.launch(Dispatchers.IO) {
             val dao = repositoryDatabase.dao()
-            removeRepository(repository, dao)
+            removeRepository(entityRepository, dao)
             loadRepositories(dao)
         }
     }
@@ -53,7 +53,7 @@ class RepositoriesViewModel(
         dao: RepositoryDao
     ) {
         dao.insert(
-            Repository(
+            EntityRepository(
                 name = name,
                 endpoint = endpoint
             )
@@ -61,10 +61,10 @@ class RepositoriesViewModel(
     }
 
     private suspend fun removeRepository(
-        repository: Repository,
+        entityRepository: EntityRepository,
         dao: RepositoryDao
     ) {
-        dao.delete(repository)
+        dao.delete(entityRepository)
     }
 
     init {

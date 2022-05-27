@@ -2,8 +2,8 @@ package com.vanced.store.di
 
 import com.vanced.store.network.service.GithubService
 import com.vanced.store.network.service.GithubServiceImpl
-import com.vanced.store.network.service.RepositoryService
-import com.vanced.store.network.service.RepositoryServiceImpl
+import com.vanced.store.network.service.RepoService
+import com.vanced.store.network.service.RepoServiceImpl
 import io.ktor.client.*
 import org.koin.dsl.module
 
@@ -11,8 +11,8 @@ val serviceModule = module {
 
     fun provideRepositoryService(
         httpClient: HttpClient
-    ): RepositoryService {
-        return RepositoryServiceImpl(
+    ): RepoService {
+        return RepoServiceImpl(
             client = httpClient
         )
     }

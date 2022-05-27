@@ -22,18 +22,20 @@ class GithubServiceImpl(
 
     override suspend fun getRepository(repo: String): GithubRepositoryDto {
         return withContext(Dispatchers.IO) {
-            client.get(getGithubRepoApiUrl(repo)).body()
+            val url = getGithubRepoApiUrl(repo)
+            client.get(url).body()
         }
     }
 
     override suspend fun getRepositoryLatestRelease(repo: String): GithubReleaseDto {
         return withContext(Dispatchers.IO) {
-            client.get(getGithubRepoLatestReleaseApiUrl(repo)).body()
+            val url = getGithubRepoLatestReleaseApiUrl(repo)
+            client.get(url).body()
         }
     }
 
     companion object {
-        const val GITHUB_API = "https://api.github.com"
+        private const val GITHUB_API = "https://api.github.com"
 
         const val REPO_MICROG = "VancedMicrog"
         const val REPO_STORE = "VancedStore"

@@ -4,7 +4,7 @@ import com.vanced.store.domain.mapper.toBrowseAppModel
 import com.vanced.store.domain.model.BrowseAppModel
 import com.vanced.store.network.service.GithubService
 import com.vanced.store.network.service.GithubServiceImpl
-import com.vanced.store.network.service.RepositoryService
+import com.vanced.store.network.service.RepoService
 
 interface BrowseRepository {
 
@@ -15,7 +15,7 @@ interface BrowseRepository {
 }
 
 class BrowseRepositoryImpl(
-    private val repositoryService: RepositoryService,
+    private val repoService: RepoService,
     private val githubService: GithubService,
 ) : BrowseRepository {
 

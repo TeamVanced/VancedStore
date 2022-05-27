@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.vanced.store.R
-import com.vanced.store.db.entity.Repository
+import com.vanced.store.db.entity.EntityRepository
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.RepositoriesViewModel
 import com.vanced.store.ui.widget.*
@@ -62,7 +62,7 @@ fun RepositoriesScreen(
 @Composable
 private fun Body(
     state: RepositoriesViewModel.State,
-    onRepositoryRemove: (Repository) -> Unit,
+    onRepositoryRemove: (EntityRepository) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AnimatedContent(
@@ -105,8 +105,8 @@ private fun ScreenLoading(
 
 @Composable
 private fun ScreenLoaded(
-    repositories: List<Repository>,
-    onRepositoryRemove: (Repository) -> Unit,
+    repositories: List<EntityRepository>,
+    onRepositoryRemove: (EntityRepository) -> Unit,
     modifier: Modifier = Modifier
 ) {
     CardLazyColumn(modifier = modifier) {

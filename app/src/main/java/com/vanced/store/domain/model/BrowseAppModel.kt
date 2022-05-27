@@ -8,18 +8,4 @@ data class BrowseAppModel(
     val appIconUrl: String,
     val supportsNonroot: Boolean,
     val supportsRoot: Boolean
-) {
-    companion object {
-        fun fromDto(appDto: AppDto): BrowseAppModel {
-            return with(appDto) {
-                BrowseAppModel(
-                    appName = appName,
-                    appDescription = appDescription,
-                    appIconUrl = "",
-                    supportsNonroot = true,
-                    supportsRoot = true
-                )
-            }
-        }
-    }
-}
+)

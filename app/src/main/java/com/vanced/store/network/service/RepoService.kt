@@ -2,14 +2,14 @@ package com.vanced.store.network.service
 
 import io.ktor.client.*
 
-interface RepositoryService {
+interface RepoService {
 
 
 
 }
 
-class RepositoryServiceImpl(
+class RepoServiceImpl(
     private val client: HttpClient
-) : RepositoryService {
+) : RepoService {
 
 }
