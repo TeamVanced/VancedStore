@@ -9,6 +9,8 @@ plugins {
 }
 
 android {
+    namespace = "com.vanced.store"
+
     compileSdk = 32
 
     defaultConfig {

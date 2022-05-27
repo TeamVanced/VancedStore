@@ -25,7 +25,7 @@ sealed class Dependencies {
 
         private const val core = "androidx.core:core:$version"
         private const val coreKtx = "androidx.core:core-ktx:$version"
-        private const val coreSplashScreen = "androidx.core:core-splashscreen:1.0.0-beta01"
+        private const val coreSplashScreen = "androidx.core:core-splashscreen:1.0.0-beta02"
 
         override fun applyDependencies(scope: DependencyHandlerScope) {
             scope {
@@ -67,14 +67,14 @@ sealed class Dependencies {
     }
 
     object Compose : Dependencies() {
-        const val version = "1.2.0-alpha08"
+        const val version = "1.2.0-beta02"
 
         private const val activity = "androidx.activity:activity-compose:1.4.0"
         private const val animations = "androidx.compose.animation:animation:$version"
         private const val foundation = "androidx.compose.foundation:foundation:$version"
         private const val runtime = "androidx.compose.runtime:runtime:$version"
         private const val material = "androidx.compose.material:material:$version"
-        private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha10"
+        private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha12"
 
         override fun applyDependencies(scope: DependencyHandlerScope) {
             scope {
@@ -89,7 +89,7 @@ sealed class Dependencies {
     }
 
     object Accompanist : Dependencies() {
-        private const val version = "0.24.7-alpha"
+        private const val version = "0.24.9-beta"
 
         private const val swiperefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
         private const val placeholderMaterial = "com.google.accompanist:accompanist-placeholder-material:$version"
@@ -107,7 +107,7 @@ sealed class Dependencies {
     }
 
     object Koin : Dependencies() {
-        private const val version = "3.1.5"
+        private const val version = "3.2.0"
 
         private const val koin = "io.insert-koin:koin-android:$version"
         private const val koinCompose = "io.insert-koin:koin-androidx-compose:$version"
