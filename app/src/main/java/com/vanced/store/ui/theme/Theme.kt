@@ -29,10 +29,10 @@ fun VSTheme(
             theme = theme,
             accent = accent
         ),
-        typography = VSTypography
+        typography = VSTypography,
+        shapes = VSShapes
     ) {
         CompositionLocalProvider(
-            LocalShapes provides VSShapes,
             LocalSpacing provides VSSpacing,
             LocalOverScrollConfiguration provides OverScrollConfiguration(
                 forceShowAlways = isAndroid12OrHigher
@@ -58,7 +58,7 @@ object VSTheme {
     val shapes
         @Composable
         @ReadOnlyComposable
-        get() = LocalShapes.current
+        get() = MaterialTheme.shapes
 
     val spacing
         @Composable
