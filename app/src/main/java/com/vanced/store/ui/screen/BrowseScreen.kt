@@ -6,13 +6,9 @@ import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.with
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -23,6 +19,7 @@ import com.vanced.store.domain.manager.BrowseLayoutMode
 import com.vanced.store.domain.model.DomainBrowseApp
 import com.vanced.store.ui.component.VSSwipeRefresh
 import com.vanced.store.ui.theme.VSTheme
+import com.vanced.store.ui.util.category
 import com.vanced.store.ui.viewmodel.BrowseViewModel
 import com.vanced.store.ui.widget.*
 import org.koin.androidx.compose.getViewModel
@@ -68,7 +65,7 @@ fun BrowseScreen(
                     BrowseScreenApps(
                         modifier = Modifier.fillMaxSize(),
                         pinnedApps = state.pinnedApps,
-                        repositoryApps = state.repositoryApps,
+                        repositoryApps = state.repoApps,
                         layoutMode = viewModel.layoutMode
                     )
                 }
@@ -125,34 +122,33 @@ fun BrowseScreenApps(
             }
             BrowseLayoutMode.GRID -> {
                 CardLazyVerticalGrid(modifier = Modifier.fillMaxSize()) {
-                    items(pinnedApps) { app ->
-                        LoadedGridBrowseAppCard(
-                            appName = app.appName,
-                            appDescription = app.appDescription,
-                            supportsNonroot = app.supportsNonroot,
-                            supportsRoot = app.supportsRoot
-                        )
-                    }
-
-                    if (pinnedApps.isNotEmpty() && repositoryApps.isNotEmpty()) {
-                        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-                            Divider(
-                                modifier = Modifier
-                                    .padding(
-                                        horizontal = VSTheme.spacing.large,
-                                        vertical = VSTheme.spacing.small
-                                    )
-                            )
+                    if (pinnedApps.isNotEmpty()) {
+                        category(title = {
+                            Text(stringResource(id = R.string.browse_category_vanced))
+                        }) {
+                            items(pinnedApps) { app ->
+                                LoadedGridBrowseAppCard(
+                                    appName = app.appName,
+                                    appDescription = app.appDescription,
+                                    supportsNonroot = app.supportsNonroot,
+                                    supportsRoot = app.supportsRoot
+                                )
+                            }
                         }
                     }
-
-                    items(repositoryApps) { app ->
-                        LoadedGridBrowseAppCard(
-                            appName = app.appName,
-                            appDescription = app.appDescription,
-                            supportsNonroot = app.supportsNonroot,
-                            supportsRoot = app.supportsRoot
-                        )
+                    if (repositoryApps.isNotEmpty()) {
+                        category(title = {
+                            Text(stringResource(id = R.string.browse_category_apps))
+                        }) {
+                            items(repositoryApps) { app ->
+                                LoadedGridBrowseAppCard(
+                                    appName = app.appName,
+                                    appDescription = app.appDescription,
+                                    supportsNonroot = app.supportsNonroot,
+                                    supportsRoot = app.supportsRoot
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -200,10 +196,10 @@ private fun AppBar(
     modifier: Modifier = Modifier,
     searchButtonEnabled: Boolean = true,
 ) {
-    ScreenTopAppBar(
+    SmallTopAppBar(
         modifier = modifier,
-        scrollBehavior = scrollBehavior,
-        title = stringResource(id = R.string.app_name),
+//        scrollBehavior = scrollBehavior,
+        title = { Text(stringResource(id = R.string.app_name)) },
         actions = {
             IconButton(onClick = {
                 onChangeLayoutMode(layoutMode.opposite())

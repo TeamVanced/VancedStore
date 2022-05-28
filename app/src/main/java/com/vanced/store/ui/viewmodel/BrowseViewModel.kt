@@ -9,7 +9,6 @@ import com.vanced.store.domain.manager.BrowseLayoutMode
 import com.vanced.store.domain.manager.PreferenceManager
 import com.vanced.store.domain.model.DomainBrowseApp
 import com.vanced.store.domain.repository.BrowseRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class BrowseViewModel(
@@ -21,8 +20,9 @@ class BrowseViewModel(
         object Loading : State()
         class Loaded(
             val pinnedApps: List<DomainBrowseApp>,
-            val repositoryApps: List<DomainBrowseApp>,
+            val repoApps: List<DomainBrowseApp>,
         ) : State()
+        object Error : State()
 
         val isLoading get() = this is Loading
         val isLoaded get() = this is Loaded
@@ -36,12 +36,18 @@ class BrowseViewModel(
 
     fun loadApps() {
         viewModelScope.launch {
-            state = State.Loading
-            delay(1000L)
-            state = State.Loaded(
-                pinnedApps = browseRepository.getPinnedApps(),
-                repositoryApps = browseRepository.getApps()
-            )
+            try {
+                state = State.Loading
+                val pinned = browseRepository.getPinnedApps()
+                val repo = browseRepository.getApps()
+                state = State.Loaded(
+                    pinnedApps = pinned,
+                    repoApps = repo
+                )
+            } catch (e: Exception) {
+                state = State.Error
+                e.printStackTrace()
+            }
         }
     }
 
