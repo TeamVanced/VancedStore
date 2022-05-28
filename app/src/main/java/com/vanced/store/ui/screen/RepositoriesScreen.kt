@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.vanced.store.R
-import com.vanced.store.db.entity.EntityRepository
+import com.vanced.store.domain.model.DomainRepo
 import com.vanced.store.ui.theme.VSTheme
-import com.vanced.store.ui.viewmodel.RepositoriesViewModel
+import com.vanced.store.ui.viewmodel.RepoViewModel
 import com.vanced.store.ui.widget.*
 import org.koin.androidx.compose.getViewModel
 
@@ -23,7 +23,7 @@ import org.koin.androidx.compose.getViewModel
 fun RepositoriesScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: RepositoriesViewModel = getViewModel()
+    viewModel: RepoViewModel = getViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     var addDialogVisible by remember { mutableStateOf(false) }
@@ -51,8 +51,8 @@ fun RepositoriesScreen(
         AddDialog(
             onDismissRequest = { addDialogVisible = false },
             onCancel = { addDialogVisible = false },
-            onSave = { name, endpoint ->
-                viewModel.saveRepo(name, endpoint)
+            onSave = { endpoint ->
+                viewModel.saveRepo(endpoint)
                 addDialogVisible = false
             }
         )
@@ -61,23 +61,25 @@ fun RepositoriesScreen(
 
 @Composable
 private fun Body(
-    state: RepositoriesViewModel.State,
-    onRepositoryRemove: (EntityRepository) -> Unit,
+    state: RepoViewModel.State,
+    onRepositoryRemove: (endpoint: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AnimatedContent(
         modifier = modifier,
         targetState = state,
-        transitionSpec = { fadeIn() with  fadeOut() }
+        transitionSpec = {
+            fadeIn() with fadeOut()
+        }
     ) { animatedState ->
         when (animatedState) {
-            is RepositoriesViewModel.State.Loading -> {
+            is RepoViewModel.State.Loading -> {
                 ScreenLoading(
                     modifier = Modifier
                         .fillMaxSize()
                 )
             }
-            is RepositoriesViewModel.State.Loaded -> {
+            is RepoViewModel.State.Loaded -> {
                 ScreenLoaded(
                     modifier = Modifier
                         .fillMaxSize(),
@@ -105,15 +107,15 @@ private fun ScreenLoading(
 
 @Composable
 private fun ScreenLoaded(
-    repositories: List<EntityRepository>,
-    onRepositoryRemove: (EntityRepository) -> Unit,
+    repositories: List<DomainRepo>,
+    onRepositoryRemove: (endpoint: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     CardLazyColumn(modifier = modifier) {
         items(repositories) { repository ->
             RepositoryCardLoaded(
                 modifier = Modifier.fillParentMaxWidth(),
-                onRemove = { onRepositoryRemove(repository) },
+                onRemove = { onRepositoryRemove(repository.endpoint) },
                 name = repository.name
             )
         }
@@ -124,18 +126,17 @@ private fun ScreenLoaded(
 private fun AddDialog(
     onDismissRequest: () -> Unit,
     onCancel: () -> Unit,
-    onSave: (name: String, endpoint: String) -> Unit,
+    onSave: (endpoint: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var name by remember { mutableStateOf("") }
     var endpoint by remember { mutableStateOf("") }
     AlertDialog(
         modifier = modifier,
         onDismissRequest = onDismissRequest,
         confirmButton = {
             TextButton(
-                enabled = name.isNotEmpty() && endpoint.isNotEmpty(),
-                onClick = { onSave(name, endpoint) },
+                enabled = endpoint.isNotEmpty(),
+                onClick = { onSave(endpoint) },
             ) {
                 Text(stringResource(R.string.dialog_save))
             }
@@ -152,11 +153,6 @@ private fun AddDialog(
                 verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
-                    label = { Text(stringResource(R.string.repositories_add_label_name)) }
-                )
                 OutlinedTextField(
                     value = endpoint,
                     onValueChange = { endpoint = it },

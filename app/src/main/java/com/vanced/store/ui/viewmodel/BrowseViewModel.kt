@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanced.store.domain.manager.BrowseLayoutMode
 import com.vanced.store.domain.manager.PreferenceManager
-import com.vanced.store.domain.model.BrowseAppModel
+import com.vanced.store.domain.model.DomainBrowseApp
 import com.vanced.store.domain.repository.BrowseRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -20,8 +20,8 @@ class BrowseViewModel(
     sealed class State {
         object Loading : State()
         class Loaded(
-            val pinnedApps: List<BrowseAppModel>,
-            val repositoryApps: List<BrowseAppModel>,
+            val pinnedApps: List<DomainBrowseApp>,
+            val repositoryApps: List<DomainBrowseApp>,
         ) : State()
 
         val isLoading get() = this is Loading

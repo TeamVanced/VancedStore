@@ -11,6 +11,12 @@ data class PartialAppDto(
     @SerialName("description")
     val description: String,
 
+    @SerialName("icon")
+    val icon: String,
+
+    @SerialName("full")
+    val full: String,
+
     @SerialName("supports_root")
     val supportsRoot: Boolean,
 

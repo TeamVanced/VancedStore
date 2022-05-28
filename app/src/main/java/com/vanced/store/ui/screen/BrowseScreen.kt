@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.vanced.store.R
 import com.vanced.store.domain.manager.BrowseLayoutMode
-import com.vanced.store.domain.model.BrowseAppModel
+import com.vanced.store.domain.model.DomainBrowseApp
 import com.vanced.store.ui.component.VSSwipeRefresh
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.BrowseViewModel
@@ -79,8 +79,8 @@ fun BrowseScreen(
 
 @Composable
 fun BrowseScreenApps(
-    pinnedApps: List<BrowseAppModel>,
-    repositoryApps: List<BrowseAppModel>,
+    pinnedApps: List<DomainBrowseApp>,
+    repositoryApps: List<DomainBrowseApp>,
     layoutMode: BrowseLayoutMode,
     modifier: Modifier = Modifier,
 ) {
