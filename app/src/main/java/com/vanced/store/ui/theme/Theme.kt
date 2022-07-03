@@ -1,8 +1,8 @@
 package com.vanced.store.ui.theme
 
 import android.os.Build
-import androidx.compose.foundation.gestures.LocalOverscrollConfiguration
-import androidx.compose.foundation.gestures.OverScrollConfiguration
+import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.foundation.OverscrollConfiguration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -34,9 +34,7 @@ fun VSTheme(
     ) {
         CompositionLocalProvider(
             LocalSpacing provides VSSpacing,
-            LocalOverScrollConfiguration provides OverScrollConfiguration(
-                forceShowAlways = isAndroid12OrHigher
-            )
+            LocalOverscrollConfiguration provides if (isAndroid12OrHigher) OverscrollConfiguration() else null
         ) {
             content()
         }

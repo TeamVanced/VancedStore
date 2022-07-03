@@ -69,6 +69,9 @@ fun BrowseScreen(
                         layoutMode = viewModel.layoutMode
                     )
                 }
+                is BrowseViewModel.State.Error -> {
+
+                }
             }
         }
     }
