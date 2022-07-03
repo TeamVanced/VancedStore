@@ -76,7 +76,7 @@ sealed class Dependencies {
         private const val foundation = "androidx.compose.foundation:foundation:$version"
         private const val runtime = "androidx.compose.runtime:runtime:$version"
         private const val material = "androidx.compose.material:material:$version"
-        private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha12"
+        private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha14"
 
         override fun applyDependencies(scope: DependencyHandlerScope) {
             scope {
