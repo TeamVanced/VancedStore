@@ -57,7 +57,7 @@ fun VSElevatedCard(
     elevation: CardElevation = CardDefaults.elevatedCardElevation(
         defaultElevation = 4.dp
     ),
-    colors: CardColors = CardDefaults.cardColors(),
+    colors: CardColors = CardDefaults.elevatedCardColors(),
     content: @Composable () -> Unit
 ) {
     if (onClick != null && interactionSource != null) {
@@ -92,7 +92,7 @@ fun VSOutlinedCard(
     shape: Shape = VSTheme.shapes.large,
     border: BorderStroke = BorderStroke(1.dp, VSTheme.colorScheme.outline),
     elevation: CardElevation = CardDefaults.outlinedCardElevation(),
-    colors: CardColors = CardDefaults.cardColors(),
+    colors: CardColors = CardDefaults.outlinedCardColors(),
     content: @Composable () -> Unit
 ) {
     if (onClick != null && interactionSource != null) {

@@ -20,12 +20,13 @@ import com.vanced.store.ui.theme.accents.*
 fun VSTheme(
     theme: ApplicationTheme,
     accent: ApplicationAccent,
+    canUseDynamic: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val isAndroid12OrHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     MaterialTheme(
         colorScheme = provideColorScheme(
-            canUseDynamic = isAndroid12OrHigher,
+            canUseDynamic = isAndroid12OrHigher && canUseDynamic,
             theme = theme,
             accent = accent
         ),
