@@ -3,7 +3,7 @@ import org.gradle.kotlin.dsl.DependencyHandlerScope
 sealed class Dependencies {
 
     object Ktor : Dependencies() {
-        private const val version = "2.0.0"
+        private const val version = "2.0.3"
 
         private const val ktorCore = "io.ktor:ktor-client-core:$version"
         private const val ktorAndroid = "io.ktor:ktor-client-android:$version"
@@ -21,11 +21,12 @@ sealed class Dependencies {
     }
 
     object AndroidxCore : Dependencies() {
-        private const val version = "1.7.0"
+        private const val coreVersion = "1.7.0"
+        private const val coreSplashScreenVersion = "1.0.0-rc01"
 
-        private const val core = "androidx.core:core:$version"
-        private const val coreKtx = "androidx.core:core-ktx:$version"
-        private const val coreSplashScreen = "androidx.core:core-splashscreen:1.0.0-beta02"
+        private const val core = "androidx.core:core:$coreVersion"
+        private const val coreKtx = "androidx.core:core-ktx:$coreVersion"
+        private const val coreSplashScreen = "androidx.core:core-splashscreen:$coreSplashScreenVersion"
 
         override fun applyDependencies(scope: DependencyHandlerScope) {
             scope {
@@ -67,7 +68,8 @@ sealed class Dependencies {
     }
 
     object Compose : Dependencies() {
-        const val version = "1.2.0-beta02"
+        private const val version = "1.2.0-beta02"
+        const val compilerVersion = "1.2.0"
 
         private const val activity = "androidx.activity:activity-compose:1.4.0"
         private const val animations = "androidx.compose.animation:animation:$version"
@@ -89,7 +91,7 @@ sealed class Dependencies {
     }
 
     object Accompanist : Dependencies() {
-        private const val version = "0.24.9-beta"
+        private const val version = "0.24.13-rc"
 
         private const val swiperefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
         private const val placeholderMaterial = "com.google.accompanist:accompanist-placeholder-material:$version"

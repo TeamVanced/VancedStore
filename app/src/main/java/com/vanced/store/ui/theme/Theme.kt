@@ -1,7 +1,7 @@
 package com.vanced.store.ui.theme
 
 import android.os.Build
-import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
+import androidx.compose.foundation.gestures.LocalOverscrollConfiguration
 import androidx.compose.foundation.gestures.OverScrollConfiguration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
