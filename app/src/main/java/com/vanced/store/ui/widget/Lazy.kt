@@ -39,7 +39,7 @@ fun CardLazyVerticalGrid(
     LazyVerticalGrid(
         modifier = modifier,
         state = state,
-        columns = GridCells.Adaptive(150.dp),
+        columns = GridCells.Adaptive(300.dp),
         verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium),
         horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium),
         contentPadding = PaddingValues(VSTheme.spacing.extraLarge),

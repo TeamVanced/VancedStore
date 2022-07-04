@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,14 +18,19 @@ import com.vanced.store.ui.theme.VSTheme
 @Composable
 fun Label(
     modifier: Modifier = Modifier,
-    shape: Shape = CircleShape,
     content: @Composable RowScope.() -> Unit,
 ) {
-    VSOutlinedCard(
+    Surface(
         modifier = modifier,
-        shape = shape,
+        shape = RoundedCornerShape(
+            topStartPercent = 50,
+            topEndPercent = 50,
+            bottomStartPercent = 50,
+            bottomEndPercent = 15
+        ),
+        color = VSTheme.colorScheme.tertiaryContainer
     ) {
-        ProvideTextStyle(VSTheme.typography.labelLarge) {
+        ProvideTextStyle(VSTheme.typography.labelSmall) {
             Row(
                 modifier = Modifier
                     .padding(

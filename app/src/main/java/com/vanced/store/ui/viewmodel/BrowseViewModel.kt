@@ -31,9 +31,6 @@ class BrowseViewModel(
     var state by mutableStateOf<State>(State.Loading)
         private set
 
-    var layoutMode by mutableStateOf(preferenceManager.browseLayoutMode)
-        private set
-
     fun loadApps() {
         viewModelScope.launch {
             try {
@@ -52,7 +49,6 @@ class BrowseViewModel(
     }
 
     fun switchLayoutMode(newMode: BrowseLayoutMode) {
-        layoutMode = newMode
         preferenceManager.browseLayoutMode = newMode
     }
 
