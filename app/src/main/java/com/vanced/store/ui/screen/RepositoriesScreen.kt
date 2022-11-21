@@ -14,18 +14,48 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.vanced.store.R
 import com.vanced.store.domain.model.DomainRepo
+import com.vanced.store.ui.navigation.VSNavigator
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.RepoViewModel
 import com.vanced.store.ui.widget.*
 import org.koin.androidx.compose.getViewModel
 
+sealed interface ReposState {
+    @Stable
+    object Loading : ReposState
+
+    @Stable
+    data class Success(val repos: List<DomainRepo>) : ReposState
+
+    @Stable
+    object Error : ReposState
+}
+
+@Composable
+fun RepositoriesScreen(
+    navigator: VSNavigator,
+    modifier: Modifier = Modifier,
+    viewModel: RepoViewModel = getViewModel(),
+) {
+    RepositoriesScreen(
+        onBackClick = {
+            navigator.back()
+        },
+        onRepoRemove = viewModel::removeRepository,
+        onRepoSave = viewModel::saveRepository,
+        state = viewModel.state,
+        modifier = modifier,
+    )
+}
+
 @Composable
 fun RepositoriesScreen(
     onBackClick: () -> Unit,
+    onRepoRemove: (String) -> Unit,
+    onRepoSave: (String) -> Unit,
+    state: ReposState,
     modifier: Modifier = Modifier,
-    viewModel: RepoViewModel = getViewModel()
 ) {
-    val state by viewModel.state.collectAsState()
     var addDialogVisible by remember { mutableStateOf(false) }
     ScreenScaffold(
         modifier = modifier,
@@ -42,9 +72,7 @@ fun RepositoriesScreen(
                 .fillMaxSize()
                 .padding(paddingValues),
             state = state,
-            onRepositoryRemove = { repository ->
-                viewModel.deleteRepo(repository)
-            }
+            onRepositoryRemove = onRepoRemove
         )
     }
     if (addDialogVisible) {
@@ -52,7 +80,7 @@ fun RepositoriesScreen(
             onDismissRequest = { addDialogVisible = false },
             onCancel = { addDialogVisible = false },
             onSave = { endpoint ->
-                viewModel.saveRepo(endpoint)
+                onRepoSave(endpoint)
                 addDialogVisible = false
             }
         )
@@ -61,7 +89,7 @@ fun RepositoriesScreen(
 
 @Composable
 private fun Body(
-    state: RepoViewModel.State,
+    state: ReposState,
     onRepositoryRemove: (endpoint: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -73,19 +101,22 @@ private fun Body(
         }
     ) { animatedState ->
         when (animatedState) {
-            is RepoViewModel.State.Loading -> {
+            is ReposState.Loading -> {
                 ScreenLoading(
                     modifier = Modifier
                         .fillMaxSize()
                 )
             }
-            is RepoViewModel.State.Loaded -> {
-                ScreenLoaded(
+            is ReposState.Success -> {
+                ScreenSuccess(
                     modifier = Modifier
                         .fillMaxSize(),
-                    repositories = animatedState.repositories,
+                    repositories = animatedState.repos,
                     onRepositoryRemove = onRepositoryRemove
                 )
+            }
+            is ReposState.Error -> {
+
             }
         }
     }
@@ -106,7 +137,7 @@ private fun ScreenLoading(
 }
 
 @Composable
-private fun ScreenLoaded(
+private fun ScreenSuccess(
     repositories: List<DomainRepo>,
     onRepositoryRemove: (endpoint: String) -> Unit,
     modifier: Modifier = Modifier

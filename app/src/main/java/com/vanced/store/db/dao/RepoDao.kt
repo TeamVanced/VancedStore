@@ -3,9 +3,13 @@ package com.vanced.store.db.dao
 import androidx.room.*
 import androidx.room.OnConflictStrategy.ABORT
 import com.vanced.store.db.entity.EntityRepo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RepoDao {
+
+    @Query("SELECT * FROM repos")
+    fun observeAll(): Flow<List<EntityRepo>>
 
     @Query("SELECT * FROM repos")
     suspend fun getAll(): List<EntityRepo>

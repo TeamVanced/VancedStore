@@ -3,7 +3,7 @@ import org.gradle.kotlin.dsl.DependencyHandlerScope
 sealed class Dependencies {
 
     object Ktor : Dependencies() {
-        private const val version = "2.0.3"
+        private const val version = "2.1.3"
 
         private const val ktorCore = "io.ktor:ktor-client-core:$version"
         private const val ktorAndroid = "io.ktor:ktor-client-android:$version"
@@ -43,10 +43,13 @@ sealed class Dependencies {
         private const val preference = "androidx.preference:preference:$version"
         private const val preferenceKtx = "androidx.preference:preference-ktx:$version"
 
+        private const val datastorePreferences = "androidx.datastore:datastore-preferences:1.0.0"
+
         override fun applyDependencies(scope: DependencyHandlerScope) {
             scope {
                 implementation(preference)
                 implementation(preferenceKtx)
+                implementation(datastorePreferences)
             }
         }
     }
@@ -68,15 +71,15 @@ sealed class Dependencies {
     }
 
     object Compose : Dependencies() {
-        private const val version = "1.2.0-beta02"
-        const val compilerVersion = "1.2.0"
+        private const val version = "1.3.1"
+        const val compilerVersion = "1.3.2"
 
         private const val activity = "androidx.activity:activity-compose:1.4.0"
         private const val animations = "androidx.compose.animation:animation:$version"
         private const val foundation = "androidx.compose.foundation:foundation:$version"
         private const val runtime = "androidx.compose.runtime:runtime:$version"
         private const val material = "androidx.compose.material:material:$version"
-        private const val material3 = "androidx.compose.material3:material3:1.0.0-alpha14"
+        private const val material3 = "androidx.compose.material3:material3:1.0.1"
 
         override fun applyDependencies(scope: DependencyHandlerScope) {
             scope {
@@ -91,7 +94,7 @@ sealed class Dependencies {
     }
 
     object Accompanist : Dependencies() {
-        private const val version = "0.24.13-rc"
+        private const val version = "0.27.1"
 
         private const val swiperefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
         private const val placeholderMaterial = "com.google.accompanist:accompanist-placeholder-material:$version"
@@ -109,7 +112,7 @@ sealed class Dependencies {
     }
 
     object Koin : Dependencies() {
-        private const val version = "3.2.0"
+        private const val version = "3.3.0"
 
         private const val koin = "io.insert-koin:koin-android:$version"
         private const val koinCompose = "io.insert-koin:koin-androidx-compose:$version"

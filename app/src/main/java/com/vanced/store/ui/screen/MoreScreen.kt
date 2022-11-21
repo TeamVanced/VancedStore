@@ -9,9 +9,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.vanced.store.R
 import com.vanced.store.ui.component.Preference
+import com.vanced.store.ui.navigation.VSNavigationScreen
+import com.vanced.store.ui.navigation.VSNavigator
 import com.vanced.store.ui.widget.CardLazyColumn
 import com.vanced.store.ui.widget.ScreenScaffold
 import com.vanced.store.ui.widget.ScreenTopAppBar
+
+@Composable
+fun MoreScreen(
+    navigator: VSNavigator,
+    modifier: Modifier = Modifier,
+) {
+    MoreScreen(
+        onRepositoriesClick = { navigator.navigate(VSNavigationScreen.Repositories) },
+        onThemesClick = { navigator.navigate(VSNavigationScreen.Themes) },
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun MoreScreen(

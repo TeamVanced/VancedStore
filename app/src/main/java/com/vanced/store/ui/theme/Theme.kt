@@ -12,14 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalContext
-import com.vanced.store.domain.manager.ApplicationAccent
-import com.vanced.store.domain.manager.ApplicationTheme
+import com.vanced.store.datasource.AppAccent
+import com.vanced.store.datasource.AppTheme
 import com.vanced.store.ui.theme.accents.*
 
 @Composable
 fun VSTheme(
-    theme: ApplicationTheme,
-    accent: ApplicationAccent,
+    theme: AppTheme,
+    accent: AppAccent,
     canUseDynamic: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -69,10 +69,10 @@ object VSTheme {
 @Composable
 private fun provideColorScheme(
     canUseDynamic: Boolean,
-    theme: ApplicationTheme,
-    accent: ApplicationAccent
+    theme: AppTheme,
+    accent: AppAccent
 ): ColorScheme {
-    val isDark = theme.isDark()
+    val isDark = theme == AppTheme.Dark || (theme == AppTheme.System && isSystemInDarkTheme())
     return if (canUseDynamic) {
         provideDynamicColorScheme(isDark)
     } else {
@@ -92,46 +92,37 @@ fun provideDynamicColorScheme(isDark: Boolean): ColorScheme {
 
 @Composable
 fun provideStaticColorScheme(
-    accent: ApplicationAccent,
+    accent: AppAccent,
     isDark: Boolean,
 ): ColorScheme {
     return when (accent) {
-        ApplicationAccent.BLUE -> {
+        AppAccent.Blue -> {
             if (isDark) {
                 BlueDarkThemeColors
             } else {
                 BlueLightThemeColors
             }
         }
-        ApplicationAccent.ORANGE -> {
+        AppAccent.Orange -> {
             if (isDark) {
                 OrangeDarkThemeColors
             } else {
                 OrangeLightThemeColors
             }
         }
-        ApplicationAccent.PINK -> {
+        AppAccent.Pink -> {
             if (isDark) {
                 PinkDarkThemeColors
             } else {
                 PinkLightThemeColors
             }
         }
-        ApplicationAccent.PURPLE -> {
+        AppAccent.Purple -> {
             if (isDark) {
                 PurpleDarkThemeColors
             } else {
                 PurpleLightThemeColors
             }
         }
-    }
-}
-
-@Composable
-fun ApplicationTheme.isDark(): Boolean {
-    return when (this) {
-        ApplicationTheme.DARK -> true
-        ApplicationTheme.SYSTEM -> isSystemInDarkTheme()
-        else -> false
     }
 }

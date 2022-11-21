@@ -34,8 +34,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             VSTheme(
-                theme = viewModel.applicationTheme,
-                accent = viewModel.applicationAccent
+                theme = viewModel.appTheme,
+                accent = viewModel.appAccent
             ) {
                 val systemUiController = rememberSystemUiController()
                 val systemBarsColor = VSTheme.colorScheme.surface
@@ -80,12 +80,10 @@ class MainActivity : ComponentActivity() {
                 when (screen) {
                     is VSNavigationScreen.Browse -> {
                         BrowseScreen(
+                            navigator = navigator,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(paddingValues),
-                            onSearchClick = {
-                                navigator.navigate(VSNavigationScreen.Search)
-                            },
+                                .padding(paddingValues)
                         )
                     }
                     is VSNavigationScreen.Library -> {
@@ -97,47 +95,30 @@ class MainActivity : ComponentActivity() {
                     }
                     is VSNavigationScreen.More -> {
                         MoreScreen(
+                            navigator = navigator,
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(paddingValues),
-                            onRepositoriesClick = {
-                                navigator.navigate(VSNavigationScreen.Repositories)
-                            },
-                            onThemesClick = {
-                                navigator.navigate(VSNavigationScreen.Themes)
-                            }
                         )
                     }
                     is VSNavigationScreen.Search -> {
                         SearchScreen(
+                            navigator = navigator,
                             modifier = Modifier.fillMaxSize(),
-                            onBackClick = {
-                                navigator.back()
-                            },
                         )
                     }
                     is VSNavigationScreen.Repositories -> {
                         RepositoriesScreen(
-                            modifier = Modifier.fillMaxSize(),
-                            onBackClick = {
-                                navigator.back()
-                            }
+                            navigator = navigator,
+                            modifier = Modifier
+                                .fillMaxSize()
                         )
                     }
                     is VSNavigationScreen.Themes -> {
                         ThemesScreen(
-                            modifier = Modifier.fillMaxSize(),
-                            onBackClick = {
-                                navigator.back()
-                            },
-                            onThemeChange = {
-                                viewModel.updateTheme(it)
-                            },
-                            onAccentChange = {
-                                viewModel.updateAccent(it)
-                            },
-                            currentTheme = viewModel.applicationTheme,
-                            currentAccent = viewModel.applicationAccent
+                            navigator = navigator,
+                            modifier = Modifier
+                                .fillMaxSize()
                         )
                     }
                 }

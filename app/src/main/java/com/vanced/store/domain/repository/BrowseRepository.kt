@@ -1,6 +1,6 @@
 package com.vanced.store.domain.repository
 
-import com.vanced.store.db.AppDatabase
+import com.vanced.store.db.VSDatabase
 import com.vanced.store.domain.mapper.toBrowseAppModel
 import com.vanced.store.domain.mapper.toDomain
 import com.vanced.store.domain.model.DomainBrowseApp
@@ -23,7 +23,7 @@ interface BrowseRepository {
 class BrowseRepositoryImpl(
     private val repoService: RepoService,
     private val githubService: GithubService,
-    private val database: AppDatabase
+    database: VSDatabase
 ) : BrowseRepository {
 
     private val repoDao = database.repoDao()

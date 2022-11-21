@@ -15,29 +15,43 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import com.vanced.store.ui.navigation.VSNavigator
 import com.vanced.store.ui.theme.VSTheme
 import com.vanced.store.ui.viewmodel.SearchViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun SearchScreen(
-    onBackClick: () -> Unit,
+    navigator: VSNavigator,
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = getViewModel()
+) {
+    SearchScreen(
+        modifier = modifier,
+        onBackClick = { navigator.back() },
+        searchValue = viewModel.searchValue,
+        onSearchValueChange = viewModel::search
+    )
+}
+
+@Composable
+fun SearchScreen(
+    onBackClick: () -> Unit,
+    searchValue: String,
+    onSearchValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
             SearchBar(
-                value = viewModel.searchValue,
-                onValueChange = {
-                    viewModel.search(it)
-                },
+                value = searchValue,
+                onValueChange = onSearchValueChange,
                 onBackClick = onBackClick
             )
         }
     ) {
-
+        it
     }
 }
 

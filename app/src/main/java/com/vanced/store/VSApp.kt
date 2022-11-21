@@ -15,11 +15,14 @@ class VSApp : Application() {
 
             modules(
                 httpModule,
-                repositoryModule,
-                viewModelModule,
-                managerModule,
                 databaseModule,
-                serviceModule
+                preferenceModule,
+
+                mainModule,
+                browseModule,
+                libraryModule,
+                reposModule,
+                themesModule
             )
         }
     }

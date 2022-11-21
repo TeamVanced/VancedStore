@@ -5,8 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.primarySurface
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,23 +14,42 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.vanced.store.R
-import com.vanced.store.domain.manager.ApplicationAccent
-import com.vanced.store.domain.manager.ApplicationTheme
-import com.vanced.store.ui.component.SegmentedButtonRow
+import com.vanced.store.datasource.AppAccent
+import com.vanced.store.datasource.AppTheme
 import com.vanced.store.ui.component.SegmentedButton
+import com.vanced.store.ui.component.SegmentedButtonRow
 import com.vanced.store.ui.component.VSOutlinedCard
+import com.vanced.store.ui.navigation.VSNavigator
 import com.vanced.store.ui.theme.VSTheme
+import com.vanced.store.ui.viewmodel.ThemesViewModel
 import com.vanced.store.ui.widget.CardLazyVerticalGrid
 import com.vanced.store.ui.widget.ScreenScaffold
 import com.vanced.store.ui.widget.ScreenTopAppBar
+import org.koin.androidx.compose.getViewModel
+
+@Composable
+fun ThemesScreen(
+    navigator: VSNavigator,
+    modifier: Modifier = Modifier,
+    viewModel: ThemesViewModel = getViewModel(),
+) {
+    ThemesScreen(
+        onBackClick = navigator::back,
+        onThemeChange = viewModel::updateTheme,
+        onAccentChange = viewModel::updateAccent,
+        currentTheme = viewModel.theme,
+        currentAccent = viewModel.accent,
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun ThemesScreen(
     onBackClick: () -> Unit,
-    onThemeChange: (ApplicationTheme) -> Unit,
-    onAccentChange: (ApplicationAccent) -> Unit,
-    currentTheme: ApplicationTheme,
-    currentAccent: ApplicationAccent,
+    onThemeChange: (AppTheme) -> Unit,
+    onAccentChange: (AppAccent) -> Unit,
+    currentTheme: AppTheme,
+    currentAccent: AppAccent,
     modifier: Modifier = Modifier,
 ) {
     ScreenScaffold(
@@ -53,7 +70,7 @@ fun ThemesScreen(
                 GridItemSpan(maxCurrentLineSpan)
             }) {
                 SegmentedButtonRow {
-                    for (theme in ApplicationTheme.values()) {
+                    for (theme in AppTheme.values()) {
                         SegmentedButton(
                             selected = currentTheme == theme,
                             onClick = { onThemeChange(theme) }
@@ -63,7 +80,7 @@ fun ThemesScreen(
                     }
                 }
             }
-            items(enumValues<ApplicationAccent>()) { accent ->
+            items(enumValues<AppAccent>()) { accent ->
                 AccentCard(
                     onClick = { onAccentChange(accent) },
                     name = accent.name,
@@ -100,8 +117,8 @@ private fun AccentCard(
     onClick: () -> Unit,
     name: String,
     selected: Boolean,
-    accent: ApplicationAccent,
-    theme: ApplicationTheme,
+    accent: AppAccent,
+    theme: AppTheme,
     modifier: Modifier = Modifier,
 ) {
     VSTheme(
