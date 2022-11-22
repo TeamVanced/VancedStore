@@ -109,11 +109,8 @@ private fun BrowseScreenSuccess(
             }) {
                 items(pinnedApps) { app ->
                     BrowseAppCardLoaded(
-                        appName = app.appName,
-                        appDescription = app.appDescription,
-                        supportsNonroot = app.supportsNonroot,
-                        supportsRoot = app.supportsRoot,
-                        onDetailsClick = {
+                        app = app,
+                        onClick = {
 
                         }
                     )
@@ -126,11 +123,8 @@ private fun BrowseScreenSuccess(
             }) {
                 items(repositoryApps) { app ->
                     BrowseAppCardLoaded(
-                        appName = app.appName,
-                        appDescription = app.appDescription,
-                        supportsNonroot = app.supportsNonroot,
-                        supportsRoot = app.supportsRoot,
-                        onDetailsClick = {
+                        app = app,
+                        onClick = {
 
                         }
                     )

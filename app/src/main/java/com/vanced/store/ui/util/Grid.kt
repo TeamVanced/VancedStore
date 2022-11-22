@@ -1,7 +1,7 @@
 package com.vanced.store.ui.util
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.material3.ProvideTextStyle
@@ -16,11 +16,10 @@ inline fun LazyGridScope.category(
 ) {
     item(span = { GridItemSpan(maxCurrentLineSpan) }) {
         ProvideTextStyle(VSTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Medium)) {
-            title()
+            Box(Modifier.padding(VSTheme.spacing.small)) {
+                title()
+            }
         }
     }
     block()
-    item(span = { GridItemSpan(maxCurrentLineSpan) }) {
-        Spacer(Modifier.height(VSTheme.spacing.small))
-    }
 }

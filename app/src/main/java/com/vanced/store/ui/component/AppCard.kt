@@ -10,56 +10,42 @@ import com.vanced.store.ui.theme.VSTheme
 
 @Composable
 fun BrowseAppCard(
+    onClick: (() -> Unit)?,
     icon: @Composable () -> Unit,
     title: @Composable () -> Unit,
     description: @Composable () -> Unit,
     labels: @Composable () -> Unit,
-    actions: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     VSElevatedCard(
+        onClick = onClick,
         modifier = modifier,
         shape = VSTheme.shapes.large
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(VSTheme.spacing.extraLarge)
-        ) {
-            Row(
-                modifier = Modifier.align(Alignment.TopEnd),
-                horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.extraSmall),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                labels()
-            }
-            Row(
+        Column {
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .align(Alignment.Center),
-                horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.large)
+                    .clip(VSTheme.shapes.medium)
+                    .fillMaxWidth()
+                    .aspectRatio(1f / 1f)
             ) {
-                Box(modifier = Modifier.clip(VSTheme.shapes.medium)) {
-                    icon()
+                icon()
+            }
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(VSTheme.spacing.medium),
+                verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.small)
+            ) {
+                ProvideTextStyle(VSTheme.typography.titleMedium) {
+                    title()
                 }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = VSTheme.spacing.extraSmall),
-                    verticalArrangement = Arrangement.spacedBy(VSTheme.spacing.medium)
+                ProvideTextStyle(VSTheme.typography.bodySmall) {
+                    description()
+                }
+                Row(
+                    modifier = Modifier.align(Alignment.End),
+                    horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.extraSmall)
                 ) {
-                    ProvideTextStyle(VSTheme.typography.titleMedium) {
-                        title()
-                    }
-                    ProvideTextStyle(VSTheme.typography.bodySmall) {
-                        description()
-                    }
-                    Row(
-                        modifier = Modifier.align(Alignment.End),
-                        horizontalArrangement = Arrangement.spacedBy(VSTheme.spacing.small)
-                    ) {
-                        actions()
-                    }
+                    labels()
                 }
             }
         }

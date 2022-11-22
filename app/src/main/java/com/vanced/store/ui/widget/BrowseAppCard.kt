@@ -2,55 +2,47 @@ package com.vanced.store.ui.widget
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.vanced.store.domain.model.DomainBrowseApp
 import com.vanced.store.ui.component.BrowseAppCard
 import com.vanced.store.ui.theme.VSTheme
 
 @Composable
 fun BrowseAppCardLoaded(
-    onDetailsClick: () -> Unit,
-    appName: String,
-    appDescription: String,
-    supportsRoot: Boolean,
-    supportsNonroot: Boolean,
+    onClick: () -> Unit,
+    app: DomainBrowseApp,
     modifier: Modifier = Modifier,
 ) {
     BrowseAppCard(
         modifier = modifier,
+        onClick = onClick,
         icon = {
             Box(modifier = Modifier
-                .size(48.dp)
-                .background(VSTheme.colorScheme.primary))
+                .fillMaxSize()
+                .background(VSTheme.colorScheme.secondary))
         },
         title = {
-            Text(appName)
+            Text(app.appName)
         },
         description = {
-            Text(appDescription)
+            Text(app.appDescription)
         },
         labels = {
-            if (supportsNonroot) {
+            if (app.supportsNonroot) {
                 Label {
                     Text(text = "Nonroot")
                 }
             }
-            if (supportsRoot) {
+            if (app.supportsRoot) {
                 Label {
                     Text(text = "Root")
                 }
             }
         },
-        actions = {
-            Button(onClick = onDetailsClick) {
-                Text("Details")
-            }
-        }
     )
 }
 
@@ -62,9 +54,8 @@ fun BrowseAppCardLoading(
         modifier = modifier,
         icon = {
             Box(modifier = Modifier
-                .size(48.dp)
-                .clip(VSTheme.shapes.medium)
-                .background(VSTheme.colorScheme.primary))
+                .fillMaxSize()
+                .background(VSTheme.colorScheme.secondary))
         },
         title = {
             Box(modifier = Modifier
@@ -88,12 +79,6 @@ fun BrowseAppCardLoading(
                 .width(36.dp)
                 .height(24.dp)) {}
         },
-        actions = {
-            Box(modifier = Modifier
-                .width(72.dp)
-                .height(36.dp)
-                .clip(CircleShape)
-                .background(VSTheme.colorScheme.primary))
-        }
+        onClick = null
     )
 }

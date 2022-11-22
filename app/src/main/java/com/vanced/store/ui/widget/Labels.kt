@@ -34,7 +34,7 @@ fun Label(
             Row(
                 modifier = Modifier
                     .padding(
-                        horizontal = VSTheme.spacing.large,
+                        horizontal = VSTheme.spacing.medium,
                         vertical = VSTheme.spacing.small
                     ),
                 horizontalArrangement = Arrangement.Center,
